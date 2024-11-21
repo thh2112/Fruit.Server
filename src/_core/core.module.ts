@@ -1,15 +1,16 @@
-import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
-import _values from "lodash/values";
-import * as configurations from "../configs";
-import { SharedModule } from "src/shared/shared.module";
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import _values from 'lodash/values';
+import { SharedModule } from 'src/shared/shared.module';
+
+import * as configurations from '../configs';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       cache: true,
       isGlobal: true,
-      envFilePath: [".env", ".env.local", ".env.production"],
+      envFilePath: ['.env', '.env.local', '.env.production'],
       load: _values(configurations),
     }),
     SharedModule,

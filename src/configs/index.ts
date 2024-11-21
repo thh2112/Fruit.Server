@@ -1,3 +1,3 @@
-import appConfig from "./app.config";
+import appConfig from './app.config';
 
 export { appConfig };

@@ -1,16 +1,39 @@
-import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app.module";
-import { NestExpressApplication } from "@nestjs/platform-express";
-import { Environment } from "./constants/consts";
-import { ConfigService } from "@nestjs/config";
-import { AppConfig } from "./constants/enums/config";
+import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import helmet from 'helmet';
+
+import { AppModule } from './app.module';
+import { Environment } from './constants/consts';
+import { AppConfig } from './constants/enums/config.enum';
+import { AllExceptionFilter, ValidationException } from './interceptors';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    logger: process.env.NODE_ENV === Environment.Production ? ["error", "warn"] : ["error", "warn", "log", "debug", "verbose"],
+    logger: process.env.NODE_ENV === Environment.Production ? ['error', 'warn'] : ['error', 'warn', 'log', 'debug', 'verbose'],
   });
 
   const configService = app.get<ConfigService>(ConfigService);
+
+  app.use(helmet());
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      exceptionFactory(errors) {
+        return new ValidationException(errors);
+      },
+      enableDebugMessages: process.env.NODE_ENV !== Environment.Production,
+      transform: true,
+      whitelist: true,
+      validationError: {
+        target: true,
+        value: true,
+      },
+    }),
+  );
+
+  app.useGlobalFilters(new AllExceptionFilter(configService));
 
   if (process.env.NODE_ENV !== Environment.Production) {
     await app.listen(configService.get(AppConfig.PORT));

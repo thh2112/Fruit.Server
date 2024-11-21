@@ -1,5 +1,5 @@
-import { Injectable, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import { Prisma, PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class PrismaService extends PrismaClient<Prisma.PrismaClientOptions, Prisma.LogLevel> implements OnModuleInit, OnModuleDestroy {
@@ -10,9 +10,9 @@ export class PrismaService extends PrismaClient<Prisma.PrismaClientOptions, Pris
   async onModuleInit() {
     try {
       await this.$connect();
-      console.log("Connect database successfully");
+      console.log('Connect database successfully');
     } catch (error) {
-      console.error("Unable to connect to the database:", error);
+      console.error('Unable to connect to the database:', error);
     }
   }
 
