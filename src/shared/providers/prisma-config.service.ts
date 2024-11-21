@@ -2,6 +2,7 @@ import { Inject, Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/commo
 import { ConfigType } from '@nestjs/config';
 import { Prisma, PrismaClient } from '@prisma/client';
 import { dbConfig } from 'src/configs/configuration';
+import { config as dotenvConfig } from 'dotenv';
 
 @Injectable()
 export class PrismaService extends PrismaClient<Prisma.PrismaClientOptions, Prisma.LogLevel> implements OnModuleInit, OnModuleDestroy {

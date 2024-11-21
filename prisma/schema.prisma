@@ -19,6 +19,7 @@ model User {
   lastName        String    @map("last_name") @db.VarChar(50)
   email           String    @unique
   password        String
+  phoneNumber     String    @map("phone_number")
   confirmPassword String    @map("confirm_password")
   avatar          String?
   isDeleted       Boolean   @default(false)

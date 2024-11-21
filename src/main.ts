@@ -1,11 +1,11 @@
-import { ValidationPipe } from '@nestjs/common';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import helmet from 'helmet';
 
 import { AppModule } from './app.module';
-import { Environment } from './constants/consts';
+import { Environment, prefixApi } from './constants/consts';
 import { AppConfig } from './constants/enums/config.enum';
 import { AllExceptionFilter, ValidationException } from './interceptors';
 
@@ -17,7 +17,12 @@ async function bootstrap() {
   const configService = app.get<ConfigService>(ConfigService);
 
   app.use(helmet());
-
+  app.setGlobalPrefix(prefixApi);
+  app.useGlobalInterceptors(
+    new ClassSerializerInterceptor(app.get(Reflector), {
+      excludeExtraneousValues: true,
+    }),
+  );
   app.useGlobalPipes(
     new ValidationPipe({
       exceptionFactory(errors) {
