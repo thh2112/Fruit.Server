@@ -1,0 +1,21 @@
+{
+  "EXH": {
+    "EXH_ERR_001": "Lỗi máy chủ nội bộ",
+    "EXH_ERR_002": "Đã xảy ra lỗi không xác định"
+  },
+  "APV": {
+    "APV_ERR_002": "Phiên bản API không được hỗ trợ"
+  },
+  "CODE": {
+    "200": "Thành công",
+    "201": "Tạo",
+    "204": "Không có nội dung",
+    "400": "Yêu cầu không hợp lệ",
+    "401": "Không được phép",
+    "403": "Cấm",
+    "404": "Không tìm thấy",
+    "415": "Loại phương tiện không được hỗ trợ",
+    "429": "Quá nhiều yêu cầu",
+    "500": "Lỗi máy chủ nội bộ"
+  }
+}

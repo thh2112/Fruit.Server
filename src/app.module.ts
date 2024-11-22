@@ -1,10 +1,9 @@
-import { Module } from '@nestjs/common';
-
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { I18nMiddleware } from 'nestjs-i18n';
 import { CoreModule } from './_core/core.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
-import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 
 @Module({

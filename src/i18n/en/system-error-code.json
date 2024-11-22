@@ -1,0 +1,21 @@
+{
+  "EXH": {
+    "EXH_ERR_001": "Internal server error",
+    "EXH_ERR_002": "An unknown error has occurred"
+  },
+  "APV": {
+    "APV_ERR_002": "Unsupported Api Version"
+  },
+  "CODE": {
+    "200": "Success",
+    "201": "Created",
+    "204": "No content",
+    "400": "Bad request",
+    "401": "Unauthorized",
+    "403": "Forbidden",
+    "404": "Not found",
+    "415": "Unsupport media type",
+    "429": "Too many requests",
+    "500": "Internal Server Error"
+  }
+}

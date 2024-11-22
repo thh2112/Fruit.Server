@@ -1,0 +1,36 @@
+{
+  "RGT": {
+    "RGT_ERR_001": "Email đã được đăng ký",
+    "RGT_ERR_002": "Tài khoản không có email không thể đăng ký",
+    "RGT_ERR_003": "Bắt buộc nhập họ",
+    "RGT_ERR_004": "Bắt buộc nhập tên",
+    "RGT_ERR_005": "Bắt buộc nhập số điện thoại",
+    "RGT_ERR_006": "Bắt buộc chọn mã vùng",
+    "RGT_ERR_007": "Bắt buộc nhập email",
+    "RGT_ERR_008": "Bắt buộc nhập mật khẩu",
+    "RGT_ERR_009": "Họ không được vượt qua 50 kí tự",
+    "RGT_ERR_010": "Tên không được vượt qua 50 kí tự",
+    "RGT_ERR_011": "Số điện thoại không hợp lệ",
+    "RGT_ERR_017": "Email không được vượt qua 50 kí tự",
+    "RGT_ERR_013": "Email không hợp lệ",
+    "RGT_ERR_018": "Password phải từ 8 đến 16 kí tự",
+    "RGT_ERR_028": "Alpha2Code không được vượt qua 2 kí tự"
+  },
+  "VRE": {
+    "VRE_ERR_001": "Email của bạn đã được xác thực"
+  },
+  "LGI": {
+    "LGI_ERR_001": "Số điện thoại, email hoặc password không đúng",
+    "LGI_ERR_002": "Tài khoản chưa tồn tại",
+    "LGI_ERR_003": "Bắt buộc nhập email",
+    "LGI_ERR_004": "Bắt buộc nhập password",
+    "LGI_ERR_014": "Email không được vượt qua 50 kí tự",
+    "LGI_ERR_015": "Password phải từ 8 đến 16 kí tự"
+  },
+  "REP": {
+    "REP_ERR_001": "Không tìm thấy token",
+    "REP_ERR_002": "Password chưa đúng, vui lòng đặt lại",
+    "REP_ERR_003": "Tính năng này không được hỗ trợ với tài khoản mạng xã hội",
+    "REP_ERR_004": "Đường dẫn đặt lại mật khẩu đã hết hạn. Vui lòng thử lại"
+  }
+}
