@@ -31,7 +31,7 @@ export class AllExceptionFilter implements ExceptionFilter {
 
     // Validation Exception
     if (exception instanceof ValidationException) {
-      response.status(HttpStatus.BAD_REQUEST).json(exception.getResponse());
+      return response.status(HttpStatus.BAD_REQUEST).json(exception.getResponse());
     }
 
     //Prisma Exception
