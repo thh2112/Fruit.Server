@@ -22,7 +22,7 @@ export class UserService implements BaseService<UserDto> {
         throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.USER.USER_ERR_001);
       }
 
-      const foundRole = !roleId ? await this.roleService.findOneByRoleName(RoleEnum.USER) : this.roleService.findOneById(roleId);
+      const foundRole = !roleId ? await this.roleService.findOneByRoleName(RoleEnum.USER) : await this.roleService.findOneById(roleId);
       if (!foundRole) {
         throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.USER.USER_ERR_002);
       }
@@ -36,7 +36,7 @@ export class UserService implements BaseService<UserDto> {
           confirmPassword,
           role: {
             connect: {
-              id: roleId,
+              id: foundRole.id,
             },
           },
           ...restDto,
