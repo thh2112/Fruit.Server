@@ -8,4 +8,7 @@ export const ENDPOINT_PATH = {
   USER: {
     BASE: '/user',
   },
+  ROLE: {
+    BASE: '/role',
+  },
 };

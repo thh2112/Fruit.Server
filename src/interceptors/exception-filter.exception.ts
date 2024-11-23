@@ -40,7 +40,7 @@ export class AllExceptionFilter implements ExceptionFilter {
     } else {
       const errorMessage: string = exception.message;
       const errorMessageCode = _last(errorMessage?.split('.'));
-      const messageI18n = SystemUtil.getIns().i18nConvertMessageError(result, status, host);
+      const messageI18n = SystemUtil.getIns().i18nConvertMessageError({ ...result, errorMessage }, status, host);
       result.errorMessageCode = errorMessageCode;
       result.errorMessage = messageI18n;
     }

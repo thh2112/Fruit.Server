@@ -7,13 +7,16 @@ export type Pagination = {
   totalPage: number;
 };
 
+export type PaginatedResult<T> = {
+  result: T;
+  paging: Pagination;
+};
+
 export interface IResponseSuccess<T> extends IResponse<T> {
-  data: T;
-  success: boolean;
+  errorMessage?: string;
+  errorMessageCode?: string;
 }
 
-export interface IResponseSuccessPagination<T> extends IResponse<T> {
-  data: T;
-  success: boolean;
+export interface IResponseSuccessPagination<T> extends IResponseSuccess<T> {
   paging: Pagination;
 }

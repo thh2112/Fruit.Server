@@ -3,6 +3,7 @@ import _map from 'lodash/map';
 import { IErrorResponse } from 'src/_core/interfaces';
 import { SYSTEM_ERROR_CODE } from 'src/constants/consts/system.constant';
 import { SystemUtil } from 'src/shared/utils/system.util';
+import _last from 'lodash/last';
 
 export class ValidationException extends BadRequestException {
   private result: IErrorResponse<null> = {
@@ -20,14 +21,16 @@ export class ValidationException extends BadRequestException {
     if (this.errors) {
       const errorObj: Array<IErrorResponse<null>> = _map(this.errors, err => {
         const constraints = Object.values(err.constraints).join(', ') || SYSTEM_ERROR_CODE.CODE[400];
+        const errorMessageCode = Object.values(err.constraints)
+          .map(err => _last(err.split('.')))
+          .join(', ');
         const resultTemp = {
           errorMessage: constraints,
           success: false,
           data: null,
-          errorMessageCode: constraints,
+          errorMessageCode: errorMessageCode,
         };
         const messageI18n = SystemUtil.getIns().i18nConvertMessageError(resultTemp, HttpStatus.BAD_REQUEST, null);
-
         resultTemp.errorMessage = messageI18n;
         return resultTemp;
       });

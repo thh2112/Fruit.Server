@@ -11,7 +11,7 @@ export class UserService implements BaseService<UserDto> {
   constructor(private readonly prismaService: PrismaService) {}
   async create(dto: CreateUserDto): Promise<UserDto | null> {
     try {
-      const { email, password, confirmPassword, firstName, lastName, ...restDto } = dto;
+      const { email, password, confirmPassword, firstName, lastName, roleId, ...restDto } = dto;
       const foundUser = await this.findOneByEmail(email);
       if (foundUser) {
         throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.USER.USER_ERR_001);
@@ -24,6 +24,11 @@ export class UserService implements BaseService<UserDto> {
           lastName,
           password,
           confirmPassword,
+          role: {
+            connect: {
+              id: roleId,
+            },
+          },
           ...restDto,
         },
       });

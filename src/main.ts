@@ -7,7 +7,7 @@ import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { Environment, prefixApi } from './constants/consts';
 import { AppConfig } from './constants/enums/config.enum';
-import { AllExceptionFilter, ValidationException } from './interceptors';
+import { AllExceptionFilter, TransformResponseInterceptor, ValidationException } from './interceptors';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -18,6 +18,7 @@ async function bootstrap() {
 
   app.use(helmet());
   app.setGlobalPrefix(prefixApi);
+  app.useGlobalInterceptors(new TransformResponseInterceptor());
   app.useGlobalInterceptors(
     new ClassSerializerInterceptor(app.get(Reflector), {
       excludeExtraneousValues: true,

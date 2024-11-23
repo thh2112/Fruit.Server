@@ -1,20 +1,24 @@
 {
   "RGT": {
-    "RGT_ERR_001": "This email address is already registered",
-    "RGT_ERR_002": "Account without email cannot register",
-    "RGT_ERR_003": "The first name field is required",
-    "RGT_ERR_004": "The last name field is required",
+    "RGT_ERR_001": "The first name field is required",
+    "RGT_ERR_002": "The first name must be a string with a maximum length of 50",
+    "RGT_ERR_003": "The last name field is required",
+    "RGT_ERR_004": "The last name must be a string with a maximum length of 50",
     "RGT_ERR_005": "The phone number field is required",
-    "RGT_ERR_006": "The alpha 2 code field is required",
-    "RGT_ERR_007": "The email field is required",
-    "RGT_ERR_008": "The password field is required.",
-    "RGT_ERR_009": "The first name must be a string with a maximum length of 50",
-    "RGT_ERR_010": "The last name must be a string with a maximum length of 50",
-    "RGT_ERR_011": "Invalid phone number",
-    "RGT_ERR_017": "The email must be a string with a maximum length of 50",
-    "RGT_ERR_013": "Incorrect email format, make sure you entered correctly",
-    "RGT_ERR_018": "The password must be a string from 8 to 16 character",
-    "RGT_ERR_028": "Alpha2Code can not exceed 2 characters"
+    "RGT_ERR_006": "The phone number must be a string with a min length of 10",
+    "RGT_ERR_007": "The phone number field must be a string with a maximum length of 16",
+    "RGT_ERR_008": "The confirm password field must be a string",
+    "RGT_ERR_009": "The avatar field must be a string",
+    "RGT_ERR_010": "The email field is required",
+    "RGT_ERR_011": "The email must be a email format",
+    "RGT_ERR_012": "The email must be a string with a maximum length of 50",
+    "RGT_ERR_013": "The password field is required.",
+    "RGT_ERR_014": "The password must be a string from 8 to 16 character long, without any white space, and include both capital and lowercase letters as well as numbers"
+  },
+  "ROL": {
+    "ROL_ERR_001": "The role field is required",
+    "ROL_ERR_002": "The role must be a enum",
+    "ROL_ERR_003": "The role is exist"
   },
   "VRE": {
     "VRE_ERR_001": "Your email already verified"
@@ -32,5 +36,12 @@
     "REP_ERR_002": "Incorrect password require, make sure you entered correctly",
     "REP_ERR_003": "This feature doesn't support social account",
     "REP_ERR_004": "Your reset link has expired. Please try again"
+  },
+  "QYP": {
+    "QYP_ERR_001": "The keyword must be a string",
+    "QYP_ERR_002": "The max per page is required",
+    "QYP_ERR_003": "The max per page must be a number",
+    "QYP_ERR_004": "The page size field is required",
+    "QYP_ERR_005": "The page size must be a number"
   }
 }
