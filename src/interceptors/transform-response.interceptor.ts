@@ -7,11 +7,12 @@ import { IResponseSuccess } from 'src/_core/interfaces';
 export class TransformResponseInterceptor<T> implements NestInterceptor<T, IResponseSuccess<T>> {
   intercept(context: ExecutionContext, next: CallHandler): Observable<IResponseSuccess<T>> {
     return next.handle().pipe(
-      map((data: IResponseSuccess<T>) => ({
+      map(data => ({
         success: true,
         errorMessageCode: data?.errorMessageCode ?? '',
         errorMessage: data?.errorMessage || '',
         data: data.data,
+        ...(data?.paging ? { paging: data.paging } : {}),
       })),
     );
   }

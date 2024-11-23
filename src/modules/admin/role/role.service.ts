@@ -66,7 +66,7 @@ export class RoleService implements BaseService<RoleDto> {
         this.prismaService.role.count(),
       ]);
 
-      const paging = PagingUtil.getIns().getPaging(pageNumber, page, totalItem);
+      const paging = PagingUtil.getIns().getPaging(page, maxPerPage, totalItem);
       const result = _map(roles, role => transformDtoToPlainObject(RoleDto, role));
       const pagingWithResult: PaginatedResult<RoleDto[]> = {
         result,
@@ -74,6 +74,22 @@ export class RoleService implements BaseService<RoleDto> {
       };
 
       return pagingWithResult;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async findOneById(id: number): Promise<RoleDto | null> {
+    try {
+      const role = await this.prismaService.role.findUnique({
+        where: { id },
+      });
+
+      if (!role) {
+        return null;
+      }
+
+      return transformDtoToPlainObject(RoleDto, role);
     } catch (error) {
       throw error;
     }

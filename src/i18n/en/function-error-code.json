@@ -41,7 +41,7 @@
     "QYP_ERR_001": "The keyword must be a string",
     "QYP_ERR_002": "The max per page is required",
     "QYP_ERR_003": "The max per page must be a number",
-    "QYP_ERR_004": "The page size field is required",
-    "QYP_ERR_005": "The page size must be a number"
+    "QYP_ERR_004": "The page number field is required",
+    "QYP_ERR_005": "The page number must be a number"
   }
 }

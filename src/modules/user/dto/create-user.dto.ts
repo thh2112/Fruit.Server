@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength, Min } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength, Min, MinLength } from 'class-validator';
 import { FUNCTION_ERROR_CODE } from 'src/constants/consts';
 import { BaseCredentialDto } from 'src/modules/auth/dto/base-credential.dto';
 
@@ -12,7 +12,7 @@ export class CreateUserDto extends BaseCredentialDto {
   lastName: string;
 
   @IsNotEmpty({ message: FUNCTION_ERROR_CODE.RGT.RGT_ERR_005 })
-  @Min(10, { message: FUNCTION_ERROR_CODE.RGT.RGT_ERR_006 })
+  @MinLength(10, { message: FUNCTION_ERROR_CODE.RGT.RGT_ERR_006 })
   @MaxLength(16, { message: FUNCTION_ERROR_CODE.RGT.RGT_ERR_007 })
   phoneNumber: string;
 

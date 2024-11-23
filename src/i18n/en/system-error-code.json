@@ -17,5 +17,9 @@
     "415": "Unsupport media type",
     "429": "Too many requests",
     "500": "Internal Server Error"
+  },
+  "USER": {
+    "USER_ERR_001": "User is existed",
+    "USER_ERR_002": "Role not found"
   }
 }

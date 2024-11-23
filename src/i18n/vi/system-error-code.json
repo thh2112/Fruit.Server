@@ -17,5 +17,9 @@
     "415": "Loại phương tiện không được hỗ trợ",
     "429": "Quá nhiều yêu cầu",
     "500": "Lỗi máy chủ nội bộ"
+  },
+  "USER": {
+    "USER_ERR_001": "Người dùng đã tồn tại",
+    "USER_ERR_002": "Role không tìm thấy"
   }
 }

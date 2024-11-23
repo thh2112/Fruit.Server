@@ -41,7 +41,7 @@
     "QYP_ERR_001": "Keyword phải là một chuỗi",
     "QYP_ERR_002": "Bắt buộc nhập max per page",
     "QYP_ERR_003": "Max per page phải là một số",
-    "QYP_ERR_004": "Bắt buộc nhập page size",
-    "QYP_ERR_005": "Page size phải là một số"
+    "QYP_ERR_004": "Bắt buộc nhập page number",
+    "QYP_ERR_005": "Page number phải là một số"
   }
 }
