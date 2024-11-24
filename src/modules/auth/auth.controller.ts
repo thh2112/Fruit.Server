@@ -1,12 +1,13 @@
-import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { Request as ExpressRequest } from 'express';
-import { IResponseSuccess } from 'src/_core/interfaces';
+import { IAuthPayload, IResponseSuccess } from 'src/_core/interfaces';
 import { ENDPOINT_PATH } from 'src/constants/consts';
 import { UserDto } from '../user/dto/user.dto';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
-import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards';
+import { LocalAuthGuard } from './guards/local-auth.guard';
+import { Authenticated } from './decorators';
 
 @Controller(ENDPOINT_PATH.AUTH.BASE)
 export class AuthController {
@@ -39,9 +40,9 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post(ENDPOINT_PATH.AUTH.PROFILE)
-  async profile() {
-    const result = await this.authService.profile(1);
+  @Get(ENDPOINT_PATH.AUTH.PROFILE)
+  async profile(@Authenticated() payload: IAuthPayload) {
+    const result = await this.authService.profile(payload.id);
     const response: IResponseSuccess<UserDto> = {
       data: result,
       success: true,

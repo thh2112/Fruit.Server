@@ -1,3 +1,5 @@
+import { RoleDto } from 'src/modules/admin/role/dto/role.dto';
+
 export type IAuthPayload = {
   id: number;
   email: string;
@@ -6,4 +8,5 @@ export type IAuthPayload = {
   exp: number;
   iss: string;
   sub: string;
+  role: RoleDto;
 };
