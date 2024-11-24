@@ -4,6 +4,7 @@ export const ENDPOINT_PATH = {
     LOGOUT: '/logout',
     REGISTER: '/register',
     BASE: '/auth',
+    PROFILE: '/profile',
   },
   USER: {
     BASE: '/user',

@@ -2,7 +2,7 @@ import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { BaseService } from 'src/_core/interfaces';
 import { SYSTEM_ERROR_CODE } from 'src/constants/consts';
 import { transformDtoToPlainObject } from 'src/shared/helpers/transform';
-import { PrismaService } from 'src/shared/providers';
+import { HashingService, PrismaService } from 'src/shared/providers';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserDto } from './dto/user.dto';
 import { RoleService } from '../admin/role/role.service';
@@ -13,6 +13,7 @@ export class UserService implements BaseService<UserDto> {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly roleService: RoleService,
+    private readonly hashingService: HashingService,
   ) {}
   async create(dto: CreateUserDto): Promise<UserDto | null> {
     try {
@@ -27,19 +28,21 @@ export class UserService implements BaseService<UserDto> {
         throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.USER.USER_ERR_002);
       }
 
+      const hashPassword = await this.hashingService.hash(password);
+      const hashConfirmPassword = await this.hashingService.hash(confirmPassword);
       const user = await this.prismaService.user.create({
         data: {
           email,
           firstName,
           lastName,
-          password,
-          confirmPassword,
+          password: hashPassword,
+          confirmPassword: hashConfirmPassword,
+          ...restDto,
           role: {
             connect: {
               id: foundRole.id,
             },
           },
-          ...restDto,
         },
       });
 
@@ -53,6 +56,9 @@ export class UserService implements BaseService<UserDto> {
     try {
       const user = await this.prismaService.user.findUnique({
         where: { id },
+        include: {
+          role: true,
+        },
       });
 
       if (!user) {
@@ -70,6 +76,9 @@ export class UserService implements BaseService<UserDto> {
       const user = await this.prismaService.user.findUnique({
         where: {
           email,
+        },
+        include: {
+          role: true,
         },
       });
 

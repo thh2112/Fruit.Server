@@ -1,10 +1,18 @@
 import { OmitType } from '@nestjs/swagger';
 import { CreateUserDto } from './create-user.dto';
-import { Expose, Transform } from 'class-transformer';
+import { Exclude, Expose, Transform } from 'class-transformer';
 import { RoleDto } from 'src/modules/admin/role/dto/role.dto';
+
 export class UserDto extends OmitType(CreateUserDto, ['password', 'confirmPassword']) {
+  @Expose()
+  id: number;
+
   @Transform(({ obj }) => `${obj.firstName} ${obj.lastName}`)
+  @Expose()
   fullName: string;
+
+  @Expose()
+  role: RoleDto;
 
   @Expose()
   isDeleted: boolean;
@@ -18,6 +26,12 @@ export class UserDto extends OmitType(CreateUserDto, ['password', 'confirmPasswo
   @Expose()
   deletedAt: string;
 
-  @Expose()
-  role: RoleDto;
+  @Exclude()
+  password: string;
+
+  @Exclude()
+  confirmPassword: string;
+
+  @Exclude()
+  roleId: number;
 }

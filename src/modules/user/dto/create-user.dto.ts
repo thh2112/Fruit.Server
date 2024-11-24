@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength, Min, MinLength } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 import { FUNCTION_ERROR_CODE } from 'src/constants/consts';
 import { BaseCredentialDto } from 'src/modules/auth/dto/base-credential.dto';
 
