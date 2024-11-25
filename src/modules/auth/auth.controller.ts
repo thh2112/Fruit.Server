@@ -8,12 +8,14 @@ import { RegisterDto } from './dto/register.dto';
 import { JwtAuthGuard } from './guards';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { Authenticated } from './decorators';
+import { Public } from 'src/_core/decorators';
 
 @Controller(ENDPOINT_PATH.AUTH.BASE)
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @UseGuards(LocalAuthGuard)
+  @Public()
   @Post(ENDPOINT_PATH.AUTH.LOGIN)
   async login(@Request() req: ExpressRequest) {
     const result = await this.authService.login(req.user as UserDto);
@@ -24,6 +26,7 @@ export class AuthController {
   }
 
   @Post(ENDPOINT_PATH.AUTH.REGISTER)
+  @Public()
   async register(@Body() registerDto: RegisterDto): Promise<IResponseSuccess<UserDto>> {
     const result: UserDto = await this.authService.register(registerDto);
     const response: IResponseSuccess<UserDto> = {

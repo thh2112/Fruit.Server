@@ -3,9 +3,17 @@ import { RoleModule } from './role/role.module';
 import { BearerTokenMiddleware } from 'src/middlewares/bearer-token.middleware';
 import { ENDPOINT_PATH } from 'src/constants/consts';
 import { CaslModule } from 'src/casl/casl.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from '../auth/guards';
 
 @Module({
   imports: [RoleModule, CaslModule],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AdminModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

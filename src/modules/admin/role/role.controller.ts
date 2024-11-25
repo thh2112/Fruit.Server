@@ -14,7 +14,7 @@ import { JwtAuthGuard } from 'src/modules/auth/guards';
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 
-  @UseGuards(JwtAuthGuard, PoliciesGuard)
+  @UseGuards(PoliciesGuard)
   @CheckPolicies(ability => ability.can(CaslAction.Create, RoleDto))
   @Post()
   async create(@Body() createRoleDto: CreateRoleDto) {
@@ -26,7 +26,7 @@ export class RoleController {
     return response;
   }
 
-  @UseGuards(JwtAuthGuard, PoliciesGuard)
+  @UseGuards(PoliciesGuard)
   @CheckPolicies(ability => ability.can(CaslAction.Read, RoleDto))
   @Get()
   async findAll(@Query() queryParams: QueryParamRoleDto) {
