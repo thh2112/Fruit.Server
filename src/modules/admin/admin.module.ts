@@ -2,9 +2,10 @@ import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/c
 import { RoleModule } from './role/role.module';
 import { BearerTokenMiddleware } from 'src/middlewares/bearer-token.middleware';
 import { ENDPOINT_PATH } from 'src/constants/consts';
+import { CaslModule } from 'src/casl/casl.module';
 
 @Module({
-  imports: [RoleModule],
+  imports: [RoleModule, CaslModule],
 })
 export class AdminModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

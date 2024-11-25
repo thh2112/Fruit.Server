@@ -5,7 +5,7 @@ export class RoleDto {
   id: number;
 
   @Expose()
-  role: number;
+  role: string;
 
   @Expose()
   createdAt: string;

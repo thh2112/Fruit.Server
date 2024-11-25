@@ -1,4 +1,4 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
+import { ArgumentsHost, Catch, ExceptionFilter, ForbiddenException, HttpException, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Prisma } from '@prisma/client';
 import { Response } from 'express';
@@ -30,6 +30,10 @@ export class AllExceptionFilter implements ExceptionFilter {
     // Validation Exception
     if (exception instanceof ValidationException) {
       return response.status(HttpStatus.BAD_REQUEST).json(exception.getResponse());
+    }
+
+    if (exception instanceof ForbiddenException) {
+      return response.status(HttpStatus.FORBIDDEN).json(exception.getResponse());
     }
 
     //Prisma Exception

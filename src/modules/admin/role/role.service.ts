@@ -66,7 +66,7 @@ export class RoleService implements BaseService<RoleDto> {
         this.prismaService.role.count(),
       ]);
 
-      const paging = PagingUtil.getIns().getPaging(page, maxPerPage, totalItem);
+      const paging = PagingUtil.getIns().getPaging(pageNumber, maxPerPage, totalItem);
       const result = _map(roles, role => transformDtoToPlainObject(RoleDto, role));
       const pagingWithResult: PaginatedResult<RoleDto[]> = {
         result,
