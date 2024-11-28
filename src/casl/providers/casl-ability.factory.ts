@@ -4,7 +4,7 @@ import { CaslAction } from 'src/constants/enums';
 import { Subjects } from '../types/casl';
 import { RoleUtil } from '../utils';
 import { RoleStrategyFactory } from '../utils/role-strategy';
-import { UserDto } from 'src/shared/modules/user/dto/user.dto';
+import { UserDto } from 'src/providers/user/dto/user.dto';
 
 export type AppAbility = Ability<[CaslAction, Subjects]>;
 @Injectable()

@@ -1,8 +1,8 @@
 import { InferSubjects } from '@casl/ability';
 import { CaslSubjectAll } from 'src/constants/enums';
 import { AppAbility } from '../providers/casl-ability.factory';
-import { UserDto } from 'src/shared/modules/user/dto/user.dto';
-import { RoleDto } from 'src/shared/modules/role/dto/role.dto';
+import { UserDto } from 'src/providers/user/dto/user.dto';
+import { RoleDto } from 'src/providers/role/dto/role.dto';
 
 type InferModelSubjects = typeof UserDto | typeof RoleDto;
 
