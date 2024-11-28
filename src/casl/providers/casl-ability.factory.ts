@@ -1,10 +1,10 @@
 import { Ability, AbilityBuilder, AbilityClass, ExtractSubjectType } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
 import { CaslAction } from 'src/constants/enums';
-import { UserDto } from 'src/modules/user/dto/user.dto';
 import { Subjects } from '../types/casl';
 import { RoleUtil } from '../utils';
 import { RoleStrategyFactory } from '../utils/role-strategy';
+import { UserDto } from 'src/shared/modules/user/dto/user.dto';
 
 export type AppAbility = Ability<[CaslAction, Subjects]>;
 @Injectable()

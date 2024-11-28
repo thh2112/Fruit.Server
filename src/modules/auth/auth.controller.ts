@@ -2,13 +2,13 @@ import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common'
 import { Request as ExpressRequest } from 'express';
 import { IAuthPayload, IResponseSuccess } from 'src/_core/interfaces';
 import { ENDPOINT_PATH } from 'src/constants/consts';
-import { UserDto } from '../user/dto/user.dto';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { JwtAuthGuard } from './guards';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { Authenticated } from './decorators';
 import { Public } from 'src/_core/decorators';
+import { UserDto } from 'src/shared/modules/user/dto/user.dto';
 
 @Controller(ENDPOINT_PATH.AUTH.BASE)
 export class AuthController {

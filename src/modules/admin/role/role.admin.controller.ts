@@ -1,17 +1,16 @@
 import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import { IResponseSuccess, IResponseSuccessPagination } from 'src/_core/interfaces';
-import { ENDPOINT_PATH } from 'src/constants/consts';
-import { CreateRoleDto } from './dto/create-role.dto';
-import { QueryParamRoleDto } from './dto/query-param-role.dto';
-import { RoleDto } from './dto/role.dto';
-import { RoleService } from './role.service';
-import { PoliciesGuard } from 'src/casl/guards';
 import { CheckPolicies } from 'src/casl/decorators';
+import { PoliciesGuard } from 'src/casl/guards';
+import { ENDPOINT_PATH } from 'src/constants/consts';
 import { CaslAction } from 'src/constants/enums';
-import { JwtAuthGuard } from 'src/modules/auth/guards';
+import { CreateRoleDto } from 'src/shared/modules/role/dto/create-role.dto';
+import { QueryParamRoleDto } from 'src/shared/modules/role/dto/query-param-role.dto';
+import { RoleDto } from 'src/shared/modules/role/dto/role.dto';
+import { RoleService } from 'src/shared/modules/role/role.service';
 
-@Controller(ENDPOINT_PATH.ROLE.BASE)
-export class RoleController {
+@Controller(ENDPOINT_PATH.ADMIN.ROLE)
+export class RoleAdminController {
   constructor(private readonly roleService: RoleService) {}
 
   @UseGuards(PoliciesGuard)

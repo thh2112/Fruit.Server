@@ -5,10 +5,10 @@ import { appConfig } from 'src/configs/configuration';
 import { FUNCTION_ERROR_CODE } from 'src/constants/consts';
 import { transformDtoToPlainObject } from 'src/shared/helpers/transform';
 import { HashingService, PrismaService } from 'src/shared/providers';
-import { CreateUserDto } from '../user/dto/create-user.dto';
-import { UserDto } from '../user/dto/user.dto';
-import { UserService } from '../user/user.service';
 import { RegisterDto } from './dto/register.dto';
+import { UserService } from 'src/shared/modules/user/user.service';
+import { UserDto } from 'src/shared/modules/user/dto/user.dto';
+import { CreateUserDto } from 'src/shared/modules/user/dto/create-user.dto';
 
 @Injectable()
 export class AuthService {

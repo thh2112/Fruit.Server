@@ -5,8 +5,8 @@ import { transformDtoToPlainObject } from 'src/shared/helpers/transform';
 import { HashingService, PrismaService } from 'src/shared/providers';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserDto } from './dto/user.dto';
-import { RoleService } from '../admin/role/role.service';
 import { RoleEnum } from '@prisma/client';
+import { RoleService } from '../role/role.service';
 
 @Injectable()
 export class UserService implements BaseService<UserDto> {
