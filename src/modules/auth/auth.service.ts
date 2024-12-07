@@ -56,10 +56,11 @@ export class AuthService {
 
   async login(user: UserDto) {
     try {
-      const { id, email, role } = user;
+      const { id, email, role, fullName } = user;
       const payload = {
         id,
         email,
+        fullName,
         role,
       };
 
@@ -75,6 +76,7 @@ export class AuthService {
       };
 
       return {
+        user: payload,
         accessToken: await this.generateToken(payload, accessTokenOptions),
         refreshToken: await this.generateToken(payload, refreshTokenOptions),
       };

@@ -4,9 +4,10 @@ import { ENDPOINT_PATH } from 'src/constants/consts';
 import { BearerTokenMiddleware } from 'src/middlewares/bearer-token.middleware';
 import { JwtAuthGuard } from '../auth/guards';
 import { RoleAdminModule } from './role/role.admin.module';
+import { NewAdminModule } from './new/new.admin.module';
 
 @Module({
-  imports: [RoleAdminModule],
+  imports: [RoleAdminModule, NewAdminModule],
   providers: [
     {
       provide: APP_GUARD,

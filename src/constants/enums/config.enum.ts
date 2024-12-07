@@ -1,6 +1,7 @@
 export enum ConfigModuleEnum {
   database = 'database',
   app = 'app',
+  cors = 'cors',
 }
 
 export enum AppConfig {

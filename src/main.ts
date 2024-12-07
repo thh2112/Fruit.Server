@@ -6,7 +6,7 @@ import helmet from 'helmet';
 
 import { AppModule } from './app.module';
 import { Environment, prefixApi } from './constants/consts';
-import { AppConfig } from './constants/enums/config.enum';
+import { AppConfig, ConfigModuleEnum } from './constants/enums/config.enum';
 import { AllExceptionFilter, TransformResponseInterceptor, ValidationException } from './interceptors';
 
 async function bootstrap() {
@@ -18,6 +18,12 @@ async function bootstrap() {
 
   app.use(helmet());
   app.setGlobalPrefix(prefixApi);
+  app.enableCors({
+    origin: configService.get(ConfigModuleEnum.cors).origin,
+    credentials: configService.get(ConfigModuleEnum.cors).credentials,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: '*',
+  });
   app.useGlobalInterceptors(new TransformResponseInterceptor());
   app.useGlobalInterceptors(
     new ClassSerializerInterceptor(app.get(Reflector), {
