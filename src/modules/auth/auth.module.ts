@@ -7,8 +7,8 @@ import { AuthService } from './auth.service';
 import { JwtConfigService } from './providers';
 import { JwtStrategy } from './strategies';
 import { LocalStrategy } from './strategies/local.strategy';
-import { UserService } from 'src/providers/user/user.service';
-import { RoleService } from 'src/providers/role/role.service';
+import { UserService } from 'src/services/user/user.service';
+import { RoleService } from 'src/services/role/role.service';
 
 @Module({
   imports: [

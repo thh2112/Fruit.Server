@@ -1,4 +1,4 @@
-import { RoleDto } from 'src/providers/role/dto/role.dto';
+import { RoleDto } from 'src/services/role/dto/role.dto';
 
 export type IAuthPayload = {
   id: number;

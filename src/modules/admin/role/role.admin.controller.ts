@@ -4,10 +4,10 @@ import { CheckPolicies } from 'src/casl/decorators';
 import { PoliciesGuard } from 'src/casl/guards';
 import { ENDPOINT_PATH } from 'src/constants/consts';
 import { CaslAction } from 'src/constants/enums';
-import { CreateRoleDto } from 'src/providers/role/dto/create-role.dto';
-import { QueryParamRoleDto } from 'src/providers/role/dto/query-param-role.dto';
-import { RoleDto } from 'src/providers/role/dto/role.dto';
-import { RoleService } from 'src/providers/role/role.service';
+import { CreateRoleDto } from 'src/services/role/dto/create-role.dto';
+import { QueryParamRoleDto } from 'src/services/role/dto/query-param-role.dto';
+import { RoleDto } from 'src/services/role/dto/role.dto';
+import { RoleService } from 'src/services/role/role.service';
 
 @Controller(ENDPOINT_PATH.ADMIN.ROLE)
 export class RoleAdminController {

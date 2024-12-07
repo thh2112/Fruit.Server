@@ -19,8 +19,8 @@ async function bootstrap() {
   app.use(helmet());
   app.setGlobalPrefix(prefixApi);
   app.enableCors({
-    origin: configService.get(ConfigModuleEnum.cors).origin,
-    credentials: configService.get(ConfigModuleEnum.cors).credentials,
+    origin: configService.get(ConfigModuleEnum.Cors).origin,
+    credentials: configService.get(ConfigModuleEnum.Cors).credentials,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: '*',
   });

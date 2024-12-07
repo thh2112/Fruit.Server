@@ -6,9 +6,9 @@ import { FUNCTION_ERROR_CODE } from 'src/constants/consts';
 import { transformDtoToPlainObject } from 'src/shared/helpers/transform';
 import { HashingService, PrismaService } from 'src/shared/providers';
 import { RegisterDto } from './dto/register.dto';
-import { UserService } from 'src/providers/user/user.service';
-import { UserDto } from 'src/providers/user/dto/user.dto';
-import { CreateUserDto } from 'src/providers/user/dto/create-user.dto';
+import { UserService } from 'src/services/user/user.service';
+import { UserDto } from 'src/services/user/dto/user.dto';
+import { CreateUserDto } from 'src/services/user/dto/create-user.dto';
 
 @Injectable()
 export class AuthService {

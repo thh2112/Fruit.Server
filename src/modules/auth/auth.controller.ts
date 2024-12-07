@@ -8,7 +8,7 @@ import { JwtAuthGuard } from './guards';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { Authenticated } from './decorators';
 import { Public } from 'src/_core/decorators';
-import { UserDto } from 'src/providers/user/dto/user.dto';
+import { UserDto } from 'src/services/user/dto/user.dto';
 
 @Controller(ENDPOINT_PATH.AUTH.BASE)
 export class AuthController {

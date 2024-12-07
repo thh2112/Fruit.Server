@@ -16,4 +16,8 @@ export const ENDPOINT_PATH = {
     BASE: '/admin',
     ROLE: '/admin/role',
   },
+  FILE: {
+    BASE: '/file',
+    UPLOAD: '/upload',
+  },
 };

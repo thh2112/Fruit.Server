@@ -2,7 +2,7 @@ import { registerAs } from '@nestjs/config';
 import { Environment } from 'src/constants/consts';
 import { ConfigModuleEnum } from 'src/constants/enums/config.enum';
 
-export default registerAs(ConfigModuleEnum.database, () => ({
+export default registerAs(ConfigModuleEnum.Database, () => ({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   username: process.env.DB_USERNAME,

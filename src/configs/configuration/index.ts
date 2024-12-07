@@ -1,4 +1,6 @@
 import appConfig from './app.config';
 import dbConfig from './db.config';
 import corsConfig from './cors.config';
-export { appConfig, dbConfig, corsConfig };
+import cloudinaryConfig from './cloudinary.config';
+
+export { appConfig, dbConfig, corsConfig, cloudinaryConfig };
