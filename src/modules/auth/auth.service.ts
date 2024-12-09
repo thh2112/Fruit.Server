@@ -76,7 +76,7 @@ export class AuthService {
       };
 
       return {
-        user: payload,
+        user,
         accessToken: await this.generateToken(payload, accessTokenOptions),
         refreshToken: await this.generateToken(payload, refreshTokenOptions),
       };
@@ -87,6 +87,10 @@ export class AuthService {
 
   async profile(userId: number): Promise<UserDto> {
     return await this.userService.findOneById(userId);
+  }
+
+  async changeAvatar(userId: number, file: Express.Multer.File) {
+    return await this.userService.updateAvatar(userId, file);
   }
 
   private async generateToken(payload: any, options: any): Promise<string> {

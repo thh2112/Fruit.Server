@@ -5,6 +5,7 @@ export const ENDPOINT_PATH = {
     REGISTER: '/register',
     BASE: '/auth',
     PROFILE: '/profile',
+    CHANGE_AVATAR: '/change-avatar',
   },
   USER: {
     BASE: '/user',

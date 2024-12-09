@@ -6,11 +6,9 @@ import { AdminModule } from './modules/admin/admin.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CustomerModule } from './modules/customer/customer.module';
 import { PublicModule } from './modules/public/public.module';
-import { IntegrationsModule } from './integrations/integrations.module';
-import { FileModule } from './modules/file/file.module';
 
 @Module({
-  imports: [CoreModule, AuthModule, CaslModule, AdminModule, CustomerModule, PublicModule, IntegrationsModule, FileModule],
+  imports: [CoreModule, AuthModule, CaslModule, AdminModule, CustomerModule, PublicModule],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

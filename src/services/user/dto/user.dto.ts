@@ -7,6 +7,12 @@ export class UserDto extends OmitType(CreateUserDto, ['password', 'confirmPasswo
   @Expose()
   id: number;
 
+  @Expose()
+  firstName: string;
+
+  @Expose()
+  lastName: string;
+
   @Transform(({ obj }) => `${obj.firstName} ${obj.lastName}`)
   @Expose()
   fullName: string;

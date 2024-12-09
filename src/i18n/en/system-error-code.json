@@ -21,5 +21,8 @@
   "USER": {
     "USER_ERR_001": "User is existed",
     "USER_ERR_002": "Role not found"
+  },
+  "FILE": {
+    "FILE_ERR_001": "Upload file failed"
   }
 }

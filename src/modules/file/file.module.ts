@@ -2,27 +2,29 @@ import { Global, Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import path from 'path';
-import { IntegrationsModule } from 'src/integrations/integrations.module';
 import { FileService } from 'src/services/file/file.service';
 import { FileController } from './file.controller';
 import moment from 'moment';
 import * as fs from 'fs';
+import { CloudinaryModule } from 'src/integrations/cloudinary/cloudinary.module';
 
 @Global()
 @Module({
   imports: [
-    IntegrationsModule,
+    CloudinaryModule,
     MulterModule.register({
       storage: diskStorage({
         destination: (req, file, cb) => {
-          const uploadsDir = path.join(__dirname, '..', '..', '..', 'uploads');
+          const uploadsDir = path.resolve(__dirname, '..', '..', '..', 'uploads');
           if (!fs.existsSync(uploadsDir)) {
             fs.mkdirSync(uploadsDir, { recursive: true });
           }
           cb(null, uploadsDir);
         },
         filename: (req, file, cb) => {
-          const filename = `${moment().valueOf()}_${file.originalname}`;
+          const timestamp = moment().format('YYYYMMDD_HHmmss');
+          const sanitizedFileName = file.originalname.replace(/[^a-zA-Z0-9.]/g, '_');
+          const filename = `${timestamp}_${sanitizedFileName}`;
           cb(null, filename);
         },
       }),
@@ -30,6 +32,6 @@ import * as fs from 'fs';
   ],
   controllers: [FileController],
   providers: [FileService],
-  exports: [FileService],
+  exports: [FileService, MulterModule],
 })
 export class FileModule {}

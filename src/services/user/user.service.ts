@@ -7,6 +7,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UserDto } from './dto/user.dto';
 import { RoleEnum } from '@prisma/client';
 import { RoleService } from '../role/role.service';
+import { FileService } from '../file/file.service';
 
 @Injectable()
 export class UserService implements BaseService<UserDto> {
@@ -14,6 +15,7 @@ export class UserService implements BaseService<UserDto> {
     private readonly prismaService: PrismaService,
     private readonly roleService: RoleService,
     private readonly hashingService: HashingService,
+    private readonly fileService: FileService,
   ) {}
   async create(dto: CreateUserDto): Promise<UserDto | null> {
     try {
@@ -87,6 +89,31 @@ export class UserService implements BaseService<UserDto> {
       }
 
       return transformDtoToPlainObject(UserDto, user);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async updateAvatar(userId: number, file: Express.Multer.File): Promise<UserDto> {
+    try {
+      const user = await this.findOneById(userId);
+      if (!user) {
+        throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.USER.USER_ERR_001);
+      }
+
+      const fileObj = await this.fileService.uploadSingleFile(file, 'avatar');
+
+      if (!fileObj) {
+        throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.FILE.FILE_ERR_001);
+      }
+
+      const updatedUser = await this.prismaService.user.update({
+        where: { id: userId },
+        data: {
+          avatar: fileObj.secure_url,
+        },
+      });
+      return transformDtoToPlainObject(UserDto, updatedUser);
     } catch (error) {
       throw error;
     }

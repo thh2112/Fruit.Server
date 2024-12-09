@@ -1,14 +1,14 @@
 import { Controller, FileTypeValidator, MaxFileSizeValidator, ParseFilePipe, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ENDPOINT_PATH } from 'src/constants/consts';
-import { CloudinaryService } from 'src/integrations/cloudinary/cloudinary.service';
+import { FileService } from 'src/services/file/file.service';
 
 @Controller(ENDPOINT_PATH.FILE.BASE)
 export class FileController {
-  constructor(private readonly cloudinaryService: CloudinaryService) {}
+  constructor(private readonly fileService: FileService) {}
   @Post(ENDPOINT_PATH.FILE.UPLOAD)
   @UseInterceptors(FileInterceptor('file'))
-  async uploadFile(
+  async uploadSingleFile(
     @UploadedFile(
       new ParseFilePipe({
         validators: [new MaxFileSizeValidator({ maxSize: 500000 }), new FileTypeValidator({ fileType: 'image/png' })],
@@ -16,7 +16,7 @@ export class FileController {
     )
     file: Express.Multer.File,
   ) {
-    const result = await this.cloudinaryService.uploadFile(file);
+    const result = await this.fileService.uploadSingleFile(file);
     const response = {
       data: result,
       success: true,

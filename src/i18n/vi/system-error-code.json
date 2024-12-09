@@ -21,5 +21,8 @@
   "USER": {
     "USER_ERR_001": "Người dùng đã tồn tại",
     "USER_ERR_002": "Role không tìm thấy"
+  },
+  "FILE": {
+    "FILE_ERR_001": "Tải tập tin thất bại"
   }
 }
