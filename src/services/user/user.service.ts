@@ -94,23 +94,23 @@ export class UserService implements BaseService<UserDto> {
     }
   }
 
-  async updateAvatar(userId: number, file: Express.Multer.File): Promise<UserDto> {
+  async updateAvatar(userId: number, file: Express.Multer.File[]): Promise<UserDto> {
     try {
       const user = await this.findOneById(userId);
       if (!user) {
         throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.USER.USER_ERR_001);
       }
 
-      const fileObj = await this.fileService.uploadSingleFile(file, 'avatar');
+      const files = await this.fileService.uploadFile(file, 'avatar');
 
-      if (!fileObj) {
+      if (!files) {
         throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.FILE.FILE_ERR_001);
       }
 
       const updatedUser = await this.prismaService.user.update({
         where: { id: userId },
         data: {
-          avatar: fileObj.secure_url,
+          avatar: files[0].secure_url,
         },
       });
       return transformDtoToPlainObject(UserDto, updatedUser);

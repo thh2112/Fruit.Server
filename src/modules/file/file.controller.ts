@@ -7,16 +7,16 @@ import { FileService } from 'src/services/file/file.service';
 export class FileController {
   constructor(private readonly fileService: FileService) {}
   @Post(ENDPOINT_PATH.FILE.UPLOAD)
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FileInterceptor('files'))
   async uploadSingleFile(
     @UploadedFile(
       new ParseFilePipe({
         validators: [new MaxFileSizeValidator({ maxSize: 500000 }), new FileTypeValidator({ fileType: 'image/png' })],
       }),
     )
-    file: Express.Multer.File,
+    files: Express.Multer.File[],
   ) {
-    const result = await this.fileService.uploadSingleFile(file);
+    const result = await this.fileService.uploadFile(files);
     const response = {
       data: result,
       success: true,

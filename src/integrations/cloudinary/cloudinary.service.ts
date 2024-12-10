@@ -9,6 +9,8 @@ export class CloudinaryService {
   async uploadFile(file: Express.Multer.File, folder: string = 'default'): Promise<UploadApiResponse> {
     try {
       const result: UploadApiResponse = await this.cloudinaryProvider.uploader.upload(file.path, { folder, resource_type: 'auto' });
+      const fs = await import('fs/promises');
+      await fs.unlink(file.path);
       return result;
     } catch (error) {
       throw new InternalServerErrorException();

@@ -1,24 +1,10 @@
-import {
-  Body,
-  Controller,
-  FileTypeValidator,
-  Get,
-  MaxFileSizeValidator,
-  Param,
-  ParseFilePipe,
-  ParseIntPipe,
-  Patch,
-  Post,
-  Request,
-  UploadedFile,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { Body, Controller, FileTypeValidator, Get, Param, ParseFilePipe, ParseIntPipe, Patch, Post, Request, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { Request as ExpressRequest } from 'express';
 import { Public } from 'src/_core/decorators';
 import { IAuthPayload, IResponseSuccess } from 'src/_core/interfaces';
 import { ENDPOINT_PATH } from 'src/constants/consts';
+import { ALLOW_FILE_REGEX } from 'src/constants/enums';
 import { UserDto } from 'src/services/user/dto/user.dto';
 import { AuthService } from './auth.service';
 import { Authenticated } from './decorators';
@@ -70,18 +56,18 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FilesInterceptor('files'))
   @Patch(`${ENDPOINT_PATH.AUTH.CHANGE_AVATAR}/:id`)
   async changeAvatar(
     @Param('id', ParseIntPipe) id: number,
-    @UploadedFile(
+    @UploadedFiles(
       new ParseFilePipe({
-        validators: [new MaxFileSizeValidator({ maxSize: 500000 }), new FileTypeValidator({ fileType: 'image/png' })],
+        validators: [new FileTypeValidator({ fileType: ALLOW_FILE_REGEX })],
       }),
     )
-    file: Express.Multer.File,
+    files: Express.Multer.File[],
   ) {
-    const result = await this.authService.changeAvatar(id, file);
+    const result = await this.authService.changeAvatar(id, files);
     const response: IResponseSuccess<UserDto> = {
       data: result,
       success: true,

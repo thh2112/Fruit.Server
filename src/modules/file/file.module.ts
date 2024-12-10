@@ -1,12 +1,13 @@
 import { Global, Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
+import * as fs from 'fs';
 import { diskStorage } from 'multer';
 import path from 'path';
-import { FileService } from 'src/services/file/file.service';
-import { FileController } from './file.controller';
-import moment from 'moment';
-import * as fs from 'fs';
+import { FileSize } from 'src/constants/enums';
 import { CloudinaryModule } from 'src/integrations/cloudinary/cloudinary.module';
+import { FileService } from 'src/services/file/file.service';
+import { DateTimeUtil } from 'src/shared/utils';
+import { FileController } from './file.controller';
 
 @Global()
 @Module({
@@ -22,12 +23,15 @@ import { CloudinaryModule } from 'src/integrations/cloudinary/cloudinary.module'
           cb(null, uploadsDir);
         },
         filename: (req, file, cb) => {
-          const timestamp = moment().format('YYYYMMDD_HHmmss');
+          const timestamp = DateTimeUtil.getIns().getDateTimeFormat();
           const sanitizedFileName = file.originalname.replace(/[^a-zA-Z0-9.]/g, '_');
           const filename = `${timestamp}_${sanitizedFileName}`;
           cb(null, filename);
         },
       }),
+      limits: {
+        fileSize: FileSize.MAX_SIZE,
+      },
     }),
   ],
   controllers: [FileController],
