@@ -6,6 +6,8 @@ export const ENDPOINT_PATH = {
     BASE: '/auth',
     PROFILE: '/profile',
     CHANGE_AVATAR: '/change-avatar',
+    CHANGE_PASSWORD: '/change-password',
+    REFRESH_TOKEN: '/refresh',
   },
   USER: {
     BASE: '/user',

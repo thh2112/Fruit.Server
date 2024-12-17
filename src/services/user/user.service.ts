@@ -8,6 +8,11 @@ import { UserDto } from './dto/user.dto';
 import { RoleEnum } from '@prisma/client';
 import { RoleService } from '../role/role.service';
 import { FileService } from '../file/file.service';
+import { Request } from 'express';
+import { ParamsDictionary } from 'express-serve-static-core';
+import { ParsedQs } from 'qs';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { ppid } from 'process';
 
 @Injectable()
 export class UserService implements BaseService<UserDto> {
@@ -19,7 +24,7 @@ export class UserService implements BaseService<UserDto> {
   ) {}
   async create(dto: CreateUserDto): Promise<UserDto | null> {
     try {
-      const { email, password, confirmPassword, firstName, lastName, roleId, ...restDto } = dto;
+      const { email, password, confirmPassword, firstName, lastName, roleId, gender, ...restDto } = dto;
       const foundUser = await this.findOneByEmail(email);
       if (foundUser) {
         throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.USER.USER_ERR_001);
@@ -39,6 +44,7 @@ export class UserService implements BaseService<UserDto> {
           lastName,
           password: hashPassword,
           confirmPassword: hashConfirmPassword,
+          gender,
           ...restDto,
           role: {
             connect: {
@@ -94,25 +100,44 @@ export class UserService implements BaseService<UserDto> {
     }
   }
 
-  async updateAvatar(userId: number, file: Express.Multer.File[]): Promise<UserDto> {
+  async updateAvatar(userId: number, files: Express.Multer.File[]): Promise<UserDto> {
     try {
-      const user = await this.findOneById(userId);
-      if (!user) {
-        throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.USER.USER_ERR_001);
+      const foundUser = await this.findOneById(userId);
+      if (!foundUser) {
+        throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.USER.USER_ERR_003);
       }
 
-      const files = await this.fileService.uploadFile(file, 'avatar');
+      const _files = await this.fileService.uploadFile(files, 'avatar');
 
-      if (!files) {
+      if (!_files) {
         throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.FILE.FILE_ERR_001);
       }
 
       const updatedUser = await this.prismaService.user.update({
         where: { id: userId },
         data: {
-          avatar: files[0].secure_url,
+          avatar: _files[0].secure_url,
         },
       });
+      return transformDtoToPlainObject(UserDto, updatedUser);
+    } catch (error) {
+      throw error;
+    }
+  }
+  async updateById(id: number, dto: UpdateUserDto): Promise<UserDto> {
+    try {
+      const foundUser = await this.findOneById(id);
+      if (!foundUser) {
+        throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.USER.USER_ERR_003);
+      }
+
+      const updatedUser = await this.prismaService.user.update({
+        where: { id },
+        data: {
+          ...dto,
+        },
+      });
+
       return transformDtoToPlainObject(UserDto, updatedUser);
     } catch (error) {
       throw error;

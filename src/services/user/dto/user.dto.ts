@@ -38,6 +38,9 @@ export class UserDto extends OmitType(CreateUserDto, ['password', 'confirmPasswo
   @Exclude()
   confirmPassword: string;
 
+  @Expose()
+  gender: number;
+
   @Exclude()
   roleId: number;
 }

@@ -1,5 +1,6 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 import { FUNCTION_ERROR_CODE } from 'src/constants/consts';
+import { Gender } from 'src/constants/enums';
 import { BaseCredentialDto } from 'src/modules/auth/dto/base-credential.dto';
 
 export class CreateUserDto extends BaseCredentialDto {
@@ -22,6 +23,10 @@ export class CreateUserDto extends BaseCredentialDto {
   @IsOptional()
   @IsString({ message: FUNCTION_ERROR_CODE.RGT.RGT_ERR_009 })
   avatar: string;
+
+  @IsNotEmpty({ message: FUNCTION_ERROR_CODE.RGT.RGT_ERR_015 })
+  @IsEnum(Gender, { message: FUNCTION_ERROR_CODE.RGT.RGT_ERR_016, each: true })
+  gender: number;
 
   @IsOptional()
   @IsNumber({}, { message: FUNCTION_ERROR_CODE.ROL.ROL_ERR_002 })

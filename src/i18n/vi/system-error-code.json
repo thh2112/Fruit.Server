@@ -20,7 +20,9 @@
   },
   "USER": {
     "USER_ERR_001": "Người dùng đã tồn tại",
-    "USER_ERR_002": "Role không tìm thấy"
+    "USER_ERR_002": "Role không tìm thấy",
+    "USER_ERR_003": "Người dùng không tồn tại",
+    "USER_ERR_004": "Mật khẩu hiện tại không đúng"
   },
   "FILE": {
     "FILE_ERR_001": "Tải tập tin thất bại"

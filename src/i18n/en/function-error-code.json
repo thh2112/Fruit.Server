@@ -13,7 +13,11 @@
     "RGT_ERR_011": "The email must be a email format",
     "RGT_ERR_012": "The email must be a string with a maximum length of 50",
     "RGT_ERR_013": "The password field is required.",
-    "RGT_ERR_014": "The password must be a string from 8 to 16 character long, without any white space, and include both capital and lowercase letters as well as numbers"
+    "RGT_ERR_014": "The password must be a string from 8 to 16 character long, without any white space, and include both capital and lowercase letters as well as numbers",
+    "RGT_ERR_015": "The gender field is required",
+    "RGT_ERR_016": "The gender must be a gender enum",
+    "RGT_ERR_017": "The current password is required",
+    "RGT_ERR_018": "The new password is required"
   },
   "ROL": {
     "ROL_ERR_001": "The role field is required",

@@ -1,14 +1,17 @@
-import { Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { IAuthPayload } from 'src/_core/interfaces';
 import { appConfig } from 'src/configs/configuration';
-import { FUNCTION_ERROR_CODE } from 'src/constants/consts';
+import { FUNCTION_ERROR_CODE, SYSTEM_ERROR_CODE } from 'src/constants/consts';
+import { CreateUserDto } from 'src/services/user/dto/create-user.dto';
+import { UpdateUserDto } from 'src/services/user/dto/update-user.dto';
+import { UserDto } from 'src/services/user/dto/user.dto';
+import { UserService } from 'src/services/user/user.service';
 import { transformDtoToPlainObject } from 'src/shared/helpers/transform';
 import { HashingService, PrismaService } from 'src/shared/providers';
+import { ChangePasswordDto } from './dto/change-password.dto';
 import { RegisterDto } from './dto/register.dto';
-import { UserService } from 'src/services/user/user.service';
-import { UserDto } from 'src/services/user/dto/user.dto';
-import { CreateUserDto } from 'src/services/user/dto/create-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -56,12 +59,13 @@ export class AuthService {
 
   async login(user: UserDto) {
     try {
-      const { id, email, role, fullName } = user;
+      const { id, email, role, fullName, avatar } = user;
       const payload = {
         id,
         email,
         fullName,
         role,
+        avatar,
       };
 
       const accessTokenOptions = {
@@ -76,7 +80,7 @@ export class AuthService {
       };
 
       return {
-        user,
+        payload,
         accessToken: await this.generateToken(payload, accessTokenOptions),
         refreshToken: await this.generateToken(payload, refreshTokenOptions),
       };
@@ -91,6 +95,62 @@ export class AuthService {
 
   async changeAvatar(userId: number, files: Express.Multer.File[]) {
     return await this.userService.updateAvatar(userId, files);
+  }
+
+  async updateProfile(userId: number, updateDto: UpdateUserDto) {
+    return await this.userService.updateById(userId, updateDto);
+  }
+
+  async refreshToken(user: UserDto): Promise<{ accessToken: string }> {
+    try {
+      const { id, email, role, fullName, avatar } = user;
+      const payload = {
+        id,
+        email,
+        fullName,
+        role,
+        avatar,
+      };
+      const token = await this.generateToken(payload, {
+        issuer: this.appConf.authIssuer,
+        audience: this.appConf.authAudience,
+        expiresIn: this.appConf.authTokenLife,
+      });
+      return { accessToken: token };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async changePassword(user: IAuthPayload, dto: ChangePasswordDto) {
+    try {
+      const foundUser = await this.prismaService.user.findUnique({
+        where: {
+          id: user.id,
+        },
+      });
+
+      if (!foundUser) {
+        throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.USER.USER_ERR_003);
+      }
+
+      const isMatchPassword = await this.hashingService.compare(dto.currentPassword, foundUser.password);
+
+      if (!isMatchPassword) {
+        throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.USER.USER_ERR_004);
+      }
+
+      await this.prismaService.user.update({
+        where: { id: user.id },
+        data: {
+          password: await this.hashingService.hash(dto.newPassword),
+        },
+      });
+
+      return null;
+    } catch (error) {
+      throw error;
+    }
   }
 
   private async generateToken(payload: any, options: any): Promise<string> {

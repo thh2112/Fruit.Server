@@ -1,4 +1,4 @@
-import { Body, Controller, FileTypeValidator, Get, Param, ParseFilePipe, ParseIntPipe, Patch, Post, Request, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, FileTypeValidator, Get, Param, ParseFilePipe, ParseIntPipe, Patch, Post, Put, Request, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { Request as ExpressRequest } from 'express';
 import { Public } from 'src/_core/decorators';
@@ -7,10 +7,13 @@ import { ENDPOINT_PATH } from 'src/constants/consts';
 import { ALLOW_FILE_REGEX } from 'src/constants/enums';
 import { UserDto } from 'src/services/user/dto/user.dto';
 import { AuthService } from './auth.service';
-import { Authenticated } from './decorators';
+import { CurrentUser } from './decorators';
 import { RegisterDto } from './dto/register.dto';
-import { JwtAuthGuard } from './guards';
+import { JwtAuthGuard, JwtRefreshAuthGuard } from './guards';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { UpdateUserDto } from 'src/services/user/dto/update-user.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
+import { DecryptChangePasswordPayload } from './interceptors';
 
 @Controller(ENDPOINT_PATH.AUTH.BASE)
 export class AuthController {
@@ -46,7 +49,7 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get(ENDPOINT_PATH.AUTH.PROFILE)
-  async profile(@Authenticated() payload: IAuthPayload) {
+  async profile(@CurrentUser() payload: IAuthPayload) {
     const result = await this.authService.profile(payload.id);
     const response: IResponseSuccess<UserDto> = {
       data: result,
@@ -69,6 +72,40 @@ export class AuthController {
   ) {
     const result = await this.authService.changeAvatar(id, files);
     const response: IResponseSuccess<UserDto> = {
+      data: result,
+      success: true,
+    };
+    return response;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put(`${ENDPOINT_PATH.AUTH.PROFILE}/:id`)
+  async updateProfile(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateUserDto) {
+    const result = await this.authService.updateProfile(id, dto);
+    const response: IResponseSuccess<UserDto> = {
+      data: result,
+      success: true,
+    };
+    return response;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post(ENDPOINT_PATH.AUTH.CHANGE_PASSWORD)
+  @UseInterceptors(DecryptChangePasswordPayload)
+  async changePassword(@CurrentUser() payload: IAuthPayload, @Body() dto: ChangePasswordDto) {
+    const result = await this.authService.changePassword(payload, dto);
+    const response: IResponseSuccess<null> = {
+      data: result,
+      success: true,
+    };
+    return response;
+  }
+
+  @UseGuards(JwtRefreshAuthGuard)
+  @Post(ENDPOINT_PATH.AUTH.REFRESH_TOKEN)
+  async refreshToken(@Request() req: ExpressRequest) {
+    const result = await this.authService.refreshToken(req.user as UserDto);
+    const response: IResponseSuccess<{ accessToken: string }> = {
       data: result,
       success: true,
     };

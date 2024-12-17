@@ -20,7 +20,9 @@
   },
   "USER": {
     "USER_ERR_001": "User is existed",
-    "USER_ERR_002": "Role not found"
+    "USER_ERR_002": "Role not found",
+    "USER_ERR_003": "User not found",
+    "USER_ERR_004": "Current password is incorrect"
   },
   "FILE": {
     "FILE_ERR_001": "Upload file failed"

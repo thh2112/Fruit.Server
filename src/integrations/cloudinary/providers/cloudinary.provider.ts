@@ -1,11 +1,11 @@
 import { ConfigService } from '@nestjs/config';
 import { v2 as cloudinary } from 'cloudinary';
-import { ConfigModuleEnum } from 'src/constants/enums';
+import { ConfigKeyEnum } from 'src/constants/enums';
 
 export const CloudinaryProvider = {
   provide: 'CLOUDINARY',
   useFactory: async (configService: ConfigService) => {
-    const cloudinaryConfig = configService.get(ConfigModuleEnum.Cloudinary);
+    const cloudinaryConfig = configService.get(ConfigKeyEnum.Cloudinary);
     cloudinary.config({
       cloud_name: cloudinaryConfig.name,
       api_key: cloudinaryConfig.key,

@@ -13,7 +13,11 @@
     "RGT_ERR_011": "Email không hợp lệ",
     "RGT_ERR_012": "Email không được vượt quá 50 kí tự",
     "RGT_ERR_013": "Mật khẩu thì bắt buộc",
-    "RGT_ERR_014": "Mật khẩu phải là một chuỗi dài từ 8 đến 16 ký tự, không có khoảng trắng và bao gồm cả chữ in hoa, chữ thường cũng như số"
+    "RGT_ERR_014": "Mật khẩu phải là một chuỗi dài từ 8 đến 16 ký tự, không có khoảng trắng và bao gồm cả chữ in hoa, chữ thường cũng như số",
+    "RGT_ERR_015": "Giới tính thì bắt buộc",
+    "RGT_ERR_016": "Giới tính phải là một enum",
+    "RGT_ERR_017": "Mật khẩu hiện tại thì bắt buộc",
+    "RGT_ERR_018": "Mật khẩu mới thì bắt buộc"
   },
   "ROL": {
     "ROL_ERR_001": "Bắt buộc nhập role",
