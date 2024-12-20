@@ -23,4 +23,8 @@ export class DateTimeUtil {
       .utc(keepLocalTime)
       .format(format ?? DATE_TIME_FORMAT);
   }
+
+  getISOString(date?: string) {
+    return moment(date).toISOString();
+  }
 }

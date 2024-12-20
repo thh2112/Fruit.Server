@@ -1,6 +1,6 @@
 import { RoleStrategy } from 'src/casl/interfaces';
 import { CaslAction } from 'src/constants/enums';
-import { NewDto } from 'src/repositories/dtos/new/new.dto';
+import { NewsDto } from 'src/repositories/dtos/news/news.dto';
 import { RoleDto } from 'src/repositories/dtos/role/role.dto';
 import { UserDto } from 'src/repositories/dtos/user/user.dto';
 
@@ -13,9 +13,9 @@ export class UserRoleStrategy implements RoleStrategy {
     cannot(CaslAction.Delete, UserDto);
     cannot(CaslAction.Manage, RoleDto);
 
-    can(CaslAction.Read, NewDto);
-    cannot(CaslAction.Create, NewDto);
-    cannot(CaslAction.Update, NewDto);
-    cannot(CaslAction.Delete, NewDto);
+    can(CaslAction.Read, NewsDto);
+    cannot(CaslAction.Create, NewsDto);
+    cannot(CaslAction.Update, NewsDto);
+    cannot(CaslAction.Delete, NewsDto);
   }
 }

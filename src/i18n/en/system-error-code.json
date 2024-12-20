@@ -24,6 +24,9 @@
     "USER_ERR_003": "User not found",
     "USER_ERR_004": "Current password is incorrect"
   },
+  "NEWS": {
+    "NEWS_ERR_001": "News not found"
+  },
   "FILE": {
     "FILE_ERR_001": "Upload file failed"
   }

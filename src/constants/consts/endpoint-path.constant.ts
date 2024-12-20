@@ -18,13 +18,13 @@ export const ENDPOINT_PATH = {
   ADMIN: {
     BASE: '/admin',
     ROLE: '/admin/role',
-    NEW: '/admin/new',
+    NEWS: '/admin/news',
   },
   FILE: {
     BASE: '/file',
     UPLOAD: '/upload',
   },
   PUBLIC: {
-    NEW: '/new',
+    NEWS: '/news',
   },
 };

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { NewPublicModule } from './new/new.public.module';
+import { NewsPublicModule } from './news/news.public.module';
 
 @Module({
-  imports: [NewPublicModule],
+  imports: [NewsPublicModule],
 })
 export class PublicModule {}

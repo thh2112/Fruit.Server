@@ -1,7 +1,7 @@
 import { Expose, Transform, Type } from 'class-transformer';
 import { UserDto } from '../user/user.dto';
 
-export class NewDto {
+export class NewsDto {
   @Expose()
   id: number;
 

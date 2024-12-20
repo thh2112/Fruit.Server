@@ -24,6 +24,9 @@
     "USER_ERR_003": "Người dùng không tồn tại",
     "USER_ERR_004": "Mật khẩu hiện tại không đúng"
   },
+  "NEWS": {
+    "NEWS_ERR_001": "Tin tức không tồn tại"
+  },
   "FILE": {
     "FILE_ERR_001": "Tải tập tin thất bại"
   }

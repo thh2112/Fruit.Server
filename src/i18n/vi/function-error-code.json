@@ -46,16 +46,18 @@
     "QYP_ERR_002": "Bắt buộc nhập max per page",
     "QYP_ERR_003": "Max per page phải là một số",
     "QYP_ERR_004": "Bắt buộc nhập page number",
-    "QYP_ERR_005": "Page number phải là một số"
+    "QYP_ERR_005": "Page number phải là một số",
+    "QYP_ERR_006": "Bắt buộc nhập from date",
+    "QYP_ERR_007": "Bắt buộc nhập to date"
   },
-  "NEW": {
-    "NEW_ERR_001": "Bắt buộc nhập caption",
-    "NEW_ERR_002": "Bắt buộc nhập content",
-    "NEW_ERR_003": "Bắt buộc nhập thumbnail",
-    "NEW_ERR_004": "Caption phải là một chuỗi dài tối đa 255 kí tự",
-    "NEW_ERR_005": "Bắt buộc nhập status",
-    "NEW_ERR_006": "Status phải là một enum",
-    "NEW_ERR_007": "Bắt buộc nhập position",
-    "NEW_ERR_008": "Position phải la một số"
+  "NEWS": {
+    "NEWS_ERR_001": "Bắt buộc nhập caption",
+    "NEWS_ERR_002": "Bắt buộc nhập content",
+    "NEWS_ERR_003": "Bắt buộc nhập thumbnail",
+    "NEWS_ERR_004": "Caption phải là một chuỗi dài tối đa 255 kí tự",
+    "NEWS_ERR_005": "Bắt buộc nhập status",
+    "NEWS_ERR_006": "Status phải là một enum",
+    "NEWS_ERR_007": "Bắt buộc nhập position",
+    "NEWS_ERR_008": "Position phải la một số"
   }
 }

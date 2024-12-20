@@ -1,7 +1,7 @@
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'src/constants/consts';
 import { IBaseQueryParams } from '../interfaces';
 import { Transform } from 'class-transformer';
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 import { FUNCTION_ERROR_CODE } from 'src/constants/consts';
 
 export class BaseQueryParams implements IBaseQueryParams {
@@ -19,8 +19,18 @@ export class BaseQueryParams implements IBaseQueryParams {
   @IsNumber({}, { message: FUNCTION_ERROR_CODE.QYP.QYP_ERR_005 })
   pageNumber: number;
 
-  constructor(obj: IBaseQueryParams) {
+  @IsOptional()
+  @IsDateString({}, { message: FUNCTION_ERROR_CODE.QYP.QYP_ERR_006 })
+  fromDate: string;
+
+  @IsOptional()
+  @IsDateString({}, { message: FUNCTION_ERROR_CODE.QYP.QYP_ERR_007 })
+  toDate: string;
+
+  constructor(obj?: IBaseQueryParams) {
     this.keyword = obj?.keyword || '';
+    this.fromDate = obj?.fromDate;
+    this.toDate = obj?.toDate;
     this.maxPerPage = obj?.maxPerPage || DEFAULT_PAGE_SIZE;
     this.pageNumber = obj?.pageNumber || DEFAULT_PAGE;
   }
