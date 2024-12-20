@@ -47,5 +47,15 @@
     "QYP_ERR_003": "Max per page phải là một số",
     "QYP_ERR_004": "Bắt buộc nhập page number",
     "QYP_ERR_005": "Page number phải là một số"
+  },
+  "NEW": {
+    "NEW_ERR_001": "Bắt buộc nhập caption",
+    "NEW_ERR_002": "Bắt buộc nhập content",
+    "NEW_ERR_003": "Bắt buộc nhập thumbnail",
+    "NEW_ERR_004": "Caption phải là một chuỗi dài tối đa 255 kí tự",
+    "NEW_ERR_005": "Bắt buộc nhập status",
+    "NEW_ERR_006": "Status phải là một enum",
+    "NEW_ERR_007": "Bắt buộc nhập position",
+    "NEW_ERR_008": "Position phải la một số"
   }
 }

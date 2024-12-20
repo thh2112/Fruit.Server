@@ -1,7 +1,7 @@
 import { Controller, FileTypeValidator, MaxFileSizeValidator, ParseFilePipe, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ENDPOINT_PATH } from 'src/constants/consts';
-import { FileService } from 'src/services/file/file.service';
+import { FileService } from 'src/repositories/file.service';
 
 @Controller(ENDPOINT_PATH.FILE.BASE)
 export class FileController {

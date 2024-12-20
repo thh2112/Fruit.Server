@@ -6,6 +6,7 @@ import { AdminModule } from './modules/admin/admin.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CustomerModule } from './modules/customer/customer.module';
 import { PublicModule } from './modules/public/public.module';
+import { RepositoriesModule } from './repositories/repositories.module';
 
 @Module({
   imports: [CoreModule, AuthModule, CaslModule, AdminModule, CustomerModule, PublicModule],

@@ -1,5 +1,5 @@
 import { Role } from 'src/constants/enums';
-import { RoleDto } from 'src/services/role/dto/role.dto';
+import { RoleDto } from 'src/repositories/dtos/role/role.dto';
 
 export class RoleUtil {
   private static roleUtilIns: RoleUtil;

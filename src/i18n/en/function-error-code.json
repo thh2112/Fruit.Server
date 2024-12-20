@@ -47,5 +47,17 @@
     "QYP_ERR_003": "The max per page must be a number",
     "QYP_ERR_004": "The page number field is required",
     "QYP_ERR_005": "The page number must be a number"
+  },
+  "NEW": {
+    "NEW_ERR_001": "The caption field is required",
+    "NEW_ERR_002": "The content field is required",
+    "NEW_ERR_003": "The thumbnail field is required",
+    "NEW_ERR_004": "Caption must be string with a maximum length of 255",
+    "NEW_ERR_005": "The status field is required",
+    "NEW_ERR_006": "The status must be a status enum",
+    "NEW_ERR_007": "The position field is required",
+    "NEW_ERR_008": "The position must be a number",
+    "NEW_ERR_009": "The user id field is required",
+    "NEW_ERR_010": "The user id must be a number"
   }
 }

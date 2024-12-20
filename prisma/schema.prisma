@@ -29,12 +29,14 @@ model User {
   confirmPassword String    @map("confirm_password")
   avatar          String?
   gender          Int       @default(0)
-  isDeleted       Boolean   @default(false)
+  isDeleted       Boolean   @default(false) @map("is_deleted")
   createdAt       DateTime  @default(now()) @map("created_at")
   updatedAt       DateTime  @updatedAt @map("updated_at")
   deletedAt       DateTime? @map("deleted_at")
   role            Role      @relation(fields: [roleId], references: [id])
   roleId          Int       @default(0) @map("role_id")
+
+  new New[]
 
   @@id([id])
   @@map("user")
@@ -47,4 +49,21 @@ model Role {
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("role")
+}
+
+model New {
+  id        Int       @id @default(autoincrement())
+  caption   String    @db.VarChar(255)
+  content   String    @db.Text
+  thumbnail String
+  status    Int       @default(1)
+  position  Int
+  isDeleted Boolean   @default(false) @map("is_deleted")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+  author    User      @relation(fields: [authorId], references: [id])
+  authorId  Int       @map("author_id")
+
+  @@map("new")
 }

@@ -6,9 +6,9 @@ import { FUNCTION_ERROR_CODE } from 'src/constants/consts';
 import { transformDtoToPlainObject } from 'src/shared/helpers/transform';
 import { PrismaService } from 'src/shared/providers';
 import { PagingUtil } from 'src/shared/utils';
-import { CreateRoleDto } from './dto/create-role.dto';
-import { QueryParamRoleDto } from './dto/query-param-role.dto';
-import { RoleDto } from './dto/role.dto';
+import { CreateRoleDto } from './dtos/role/create-role.dto';
+import { QueryParamRoleDto } from './dtos/role/query-param-role.dto';
+import { RoleDto } from './dtos/role/role.dto';
 
 @Injectable()
 export class RoleService implements BaseService<RoleDto> {

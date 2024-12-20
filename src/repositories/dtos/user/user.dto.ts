@@ -1,7 +1,7 @@
 import { OmitType } from '@nestjs/swagger';
 import { CreateUserDto } from './create-user.dto';
 import { Exclude, Expose, Transform } from 'class-transformer';
-import { RoleDto } from '../../role/dto/role.dto';
+import { RoleDto } from '../role/role.dto';
 
 export class UserDto extends OmitType(CreateUserDto, ['password', 'confirmPassword']) {
   @Expose()
@@ -43,4 +43,9 @@ export class UserDto extends OmitType(CreateUserDto, ['password', 'confirmPasswo
 
   @Exclude()
   roleId: number;
+
+  constructor(partial?: Partial<UserDto>) {
+    super(partial);
+    Object.assign(this, { ...this, ...partial });
+  }
 }

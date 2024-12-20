@@ -1,17 +1,19 @@
-import { InferSubjects } from '@casl/ability';
-import { CaslSubjectAll } from 'src/constants/enums';
-import { AppAbility } from '../providers/casl-ability.factory';
-import { UserDto } from 'src/services/user/dto/user.dto';
-import { RoleDto } from 'src/services/role/dto/role.dto';
+import { Ability, InferSubjects } from '@casl/ability';
+import { CaslAction, CaslSubjectAll } from 'src/constants/enums';
+import { ExecutionContext } from '@nestjs/common';
+import { UserDto } from 'src/repositories/dtos/user/user.dto';
+import { RoleDto } from 'src/repositories/dtos/role/role.dto';
+import { NewDto } from 'src/repositories/dtos/new/new.dto';
 
-type InferModelSubjects = typeof UserDto | typeof RoleDto;
+type InferModelSubjects = typeof UserDto | typeof RoleDto | typeof NewDto;
 
 export type Subjects = InferSubjects<InferModelSubjects> | typeof CaslSubjectAll;
+export type AppAbility = Ability<[CaslAction, Subjects]>;
 
 interface IPolicyHandler {
-  handle(ability: AppAbility): boolean;
+  handle(ability: AppAbility, context?: ExecutionContext): boolean;
 }
 
-type PolicyHandlerCallback = (ability: AppAbility) => boolean;
+type PolicyHandlerCallback = (ability: AppAbility, context?: ExecutionContext) => boolean;
 
 export type PolicyHandler = IPolicyHandler | PolicyHandlerCallback;

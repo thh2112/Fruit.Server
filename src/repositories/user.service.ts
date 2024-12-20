@@ -3,15 +3,15 @@ import { BaseService } from 'src/_core/interfaces';
 import { SYSTEM_ERROR_CODE } from 'src/constants/consts';
 import { transformDtoToPlainObject } from 'src/shared/helpers/transform';
 import { HashingService, PrismaService } from 'src/shared/providers';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UserDto } from './dto/user.dto';
+import { CreateUserDto } from './dtos/user/create-user.dto';
+import { UserDto } from './dtos/user/user.dto';
 import { RoleEnum } from '@prisma/client';
-import { RoleService } from '../role/role.service';
-import { FileService } from '../file/file.service';
+import { RoleService } from './role.service';
+import { FileService } from './file.service';
 import { Request } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
 import { ParsedQs } from 'qs';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDto } from './dtos/user/update-user.dto';
 import { ppid } from 'process';
 
 @Injectable()

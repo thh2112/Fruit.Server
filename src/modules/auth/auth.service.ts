@@ -4,14 +4,14 @@ import { JwtService } from '@nestjs/jwt';
 import { IAuthPayload } from 'src/_core/interfaces';
 import { appConfig } from 'src/configs/configuration';
 import { FUNCTION_ERROR_CODE, SYSTEM_ERROR_CODE } from 'src/constants/consts';
-import { CreateUserDto } from 'src/services/user/dto/create-user.dto';
-import { UpdateUserDto } from 'src/services/user/dto/update-user.dto';
-import { UserDto } from 'src/services/user/dto/user.dto';
-import { UserService } from 'src/services/user/user.service';
 import { transformDtoToPlainObject } from 'src/shared/helpers/transform';
 import { HashingService, PrismaService } from 'src/shared/providers';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { RegisterDto } from './dto/register.dto';
+import { UserService } from 'src/repositories/user.service';
+import { UserDto } from 'src/repositories/dtos/user/user.dto';
+import { UpdateUserDto } from 'src/repositories/dtos/user/update-user.dto';
+import { CreateUserDto } from 'src/repositories/dtos/user/create-user.dto';
 
 @Injectable()
 export class AuthService {
