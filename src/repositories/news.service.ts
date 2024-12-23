@@ -87,12 +87,17 @@ export class NewsService implements BaseService<NewsDto> {
           skip,
           take,
           orderBy: orderBy,
+          include: {
+            author: true,
+          },
         }),
         this.prismaService.new.count({ where }),
       ]);
 
       const paging = PagingUtil.getIns().getPaging(pageNumber, maxPerPage, totalItem);
-      const result = _map(news, news => transformDtoToPlainObject(NewsDto, news));
+      const result = _map(news, newsItem => {
+        return transformDtoToPlainObject(NewsDto, newsItem);
+      });
       const pagingWithResult: PaginatedResult<NewsDto[]> = {
         result,
         paging,
