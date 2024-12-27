@@ -4,10 +4,10 @@ import * as fs from 'fs';
 import { diskStorage } from 'multer';
 import path from 'path';
 import { FileSize } from 'src/constants/enums';
-import { CloudinaryModule } from 'src/integrations/cloudinary/cloudinary.module';
 import { DateTimeUtil } from 'src/shared/utils';
 import { FileController } from './file.controller';
 import { FileService } from 'src/repositories/file.service';
+import { CloudinaryModule } from '../integrations/cloudinary/cloudinary.module';
 
 @Global()
 @Module({

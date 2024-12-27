@@ -1,18 +1,14 @@
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { RoleEnum } from '@prisma/client';
 import { BaseService } from 'src/_core/interfaces';
 import { SYSTEM_ERROR_CODE } from 'src/constants/consts';
 import { transformDtoToPlainObject } from 'src/shared/helpers/transform';
 import { HashingService, PrismaService } from 'src/shared/providers';
 import { CreateUserDto } from './dtos/user/create-user.dto';
-import { UserDto } from './dtos/user/user.dto';
-import { RoleEnum } from '@prisma/client';
-import { RoleService } from './role.service';
-import { FileService } from './file.service';
-import { Request } from 'express';
-import { ParamsDictionary } from 'express-serve-static-core';
-import { ParsedQs } from 'qs';
 import { UpdateUserDto } from './dtos/user/update-user.dto';
-import { ppid } from 'process';
+import { UserDto } from './dtos/user/user.dto';
+import { FileService } from './file.service';
+import { RoleService } from './role.service';
 
 @Injectable()
 export class UserService implements BaseService<UserDto> {
