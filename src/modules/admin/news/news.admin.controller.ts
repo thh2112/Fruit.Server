@@ -1,10 +1,10 @@
 import { Body, Controller, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
 import { IResponseSuccess } from 'src/_core/interfaces';
-import { CheckPolicies } from 'src/casl/decorators';
-import { PoliciesGuard } from 'src/casl/guards';
-import { AppAbility } from 'src/casl/types';
 import { ENDPOINT_PATH } from 'src/constants/consts';
 import { CaslAction } from 'src/constants/enums';
+import { CheckPolicies } from 'src/modules/casl/decorators';
+import { PoliciesGuard } from 'src/modules/casl/guards';
+import { AppAbility } from 'src/modules/casl/types';
 import { CreateNewsDto } from 'src/repositories/dtos/news/create-news.dto';
 import { NewsDto } from 'src/repositories/dtos/news/news.dto';
 import { UpdateNewsDto } from 'src/repositories/dtos/news/update-news.dto';

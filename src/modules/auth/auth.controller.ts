@@ -28,11 +28,11 @@ import { JwtAuthGuard, JwtRefreshAuthGuard } from './guards';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { DecryptChangePasswordPayload } from './interceptors';
-import { CheckPolicies } from 'src/casl/decorators';
-import { PoliciesGuard } from 'src/casl/guards';
-import { AppAbility } from 'src/casl/types';
 import { UserDto } from 'src/repositories/dtos/user/user.dto';
 import { UpdateUserDto } from 'src/repositories/dtos/user/update-user.dto';
+import { PoliciesGuard } from '../casl/guards';
+import { CheckPolicies } from '../casl/decorators';
+import { AppAbility } from '../casl/types';
 
 @UseGuards(JwtAuthGuard)
 @Controller(ENDPOINT_PATH.AUTH.BASE)

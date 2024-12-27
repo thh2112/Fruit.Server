@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import { IResponseSuccess, IResponseSuccessPagination } from 'src/_core/interfaces';
-import { CheckPolicies } from 'src/casl/decorators';
-import { PoliciesGuard } from 'src/casl/guards';
 import { ENDPOINT_PATH } from 'src/constants/consts';
 import { CaslAction } from 'src/constants/enums';
+import { CheckPolicies } from 'src/modules/casl/decorators';
+import { PoliciesGuard } from 'src/modules/casl/guards';
 import { CreateRoleDto } from 'src/repositories/dtos/role/create-role.dto';
 import { QueryParamRoleDto } from 'src/repositories/dtos/role/query-param-role.dto';
 import { RoleDto } from 'src/repositories/dtos/role/role.dto';

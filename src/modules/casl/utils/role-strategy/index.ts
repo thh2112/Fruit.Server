@@ -1,7 +1,7 @@
-import { RoleStrategy } from 'src/casl/interfaces';
 import { AdminRoleStrategy } from './admin';
 import { UserRoleStrategy } from './user';
 import { DeniedRoleStrategy } from './denied';
+import { RoleStrategy } from '../../interfaces';
 
 export class RoleStrategyFactory {
   private static roleStrategyFactoryIns: RoleStrategyFactory;
