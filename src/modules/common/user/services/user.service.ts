@@ -6,6 +6,10 @@ import { transformDtoToPlainObject } from 'src/shared/helpers/transform';
 import { HashingService, PrismaService } from 'src/shared/providers';
 import { CreateUserDto, UpdateUserDto, UserDto } from '../dtos';
 import { RoleService } from 'src/modules/common//role/services/role.service';
+import { FileService } from '../../file/services/file.service';
+import { FileOptions } from 'buffer';
+import { FileOption } from '../../file/interfaces';
+import { FileType } from 'src/constants/enums';
 
 @Injectable()
 export class UserService implements BaseService<UserDto> {
@@ -13,7 +17,7 @@ export class UserService implements BaseService<UserDto> {
     private readonly prismaService: PrismaService,
     private readonly roleService: RoleService,
     private readonly hashingService: HashingService,
-    // private readonly fileService: FileService,
+    private readonly fileService: FileService,
   ) {}
   async create(dto: CreateUserDto): Promise<UserDto | null> {
     try {
@@ -93,30 +97,36 @@ export class UserService implements BaseService<UserDto> {
     }
   }
 
-  // async updateAvatar(userId: number, files: Express.Multer.File[]): Promise<UserDto> {
-  //   try {
-  //     const foundUser = await this.findOneById(userId);
-  //     if (!foundUser) {
-  //       throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.USER.USER_ERR_003);
-  //     }
+  async updateAvatar(userId: number, files: Express.Multer.File[]): Promise<UserDto> {
+    try {
+      const foundUser = await this.findOneById(userId);
+      if (!foundUser) {
+        throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.USER.USER_ERR_003);
+      }
 
-  //     const _files = await this.fileService.uploadFile(files, 'avatar');
+      const fileOptions: FileOption = {
+        folder: `users/${userId}`,
+        height: 300,
+        width: 300,
+      };
 
-  //     if (!_files) {
-  //       throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.FILE.FILE_ERR_001);
-  //     }
+      const _files = await this.fileService.uploadFile(files, fileOptions);
 
-  //     const updatedUser = await this.prismaService.user.update({
-  //       where: { id: userId },
-  //       data: {
-  //         avatar: _files[0].secure_url,
-  //       },
-  //     });
-  //     return transformDtoToPlainObject(UserDto, updatedUser);
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
+      if (!_files) {
+        throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.FILE.FILE_ERR_001);
+      }
+
+      const updatedUser = await this.prismaService.user.update({
+        where: { id: userId },
+        data: {
+          avatar: _files[0].secure_url,
+        },
+      });
+      return transformDtoToPlainObject(UserDto, updatedUser);
+    } catch (error) {
+      throw error;
+    }
+  }
   async updateById(id: number, dto: UpdateUserDto): Promise<UserDto> {
     try {
       const foundUser = await this.findOneById(id);

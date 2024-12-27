@@ -15,7 +15,7 @@ export class FileUtil {
       return false;
     }
 
-    const allowFileTypes = new Set<FileType>([FileType.JPEG, FileType.JPG, FileType.PNG]);
+    const allowFileTypes = new Set<FileType>([FileType.JPEG, FileType.JPG, FileType.PNG, FileType.MP4, FileType.WEBP]);
     return files.every(fileType => allowFileTypes.has(fileType.mimetype as FileType));
   }
 }

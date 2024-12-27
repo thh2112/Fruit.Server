@@ -92,8 +92,7 @@ export class AuthService {
   }
 
   async changeAvatar(userId: number, files: Express.Multer.File[]) {
-    return null;
-    // return await this.userService.updateAvatar(userId, files);
+    return await this.userService.updateAvatar(userId, files);
   }
 
   async updateProfile(userId: number, updateDto: UpdateUserDto) {

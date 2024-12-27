@@ -7,12 +7,12 @@ import { FileSize } from 'src/constants/enums';
 import { DateTimeUtil } from 'src/shared/utils';
 
 import { FileService } from './services/file.service';
-import { CloudinaryModule } from 'src/modules/integrations/cloudinary/cloudinary.module';
+import { CloudinaryProvider } from './services/cloudinary.provider';
+import { CloudinaryService } from './services/cloudinary.service';
 
 @Global()
 @Module({
   imports: [
-    CloudinaryModule,
     MulterModule.register({
       storage: diskStorage({
         destination: (req, file, cb) => {
@@ -34,7 +34,7 @@ import { CloudinaryModule } from 'src/modules/integrations/cloudinary/cloudinary
       },
     }),
   ],
-  providers: [FileService],
+  providers: [FileService, CloudinaryProvider, CloudinaryService],
   exports: [FileService, MulterModule],
 })
 export class FileModule {}

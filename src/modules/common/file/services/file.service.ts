@@ -1,13 +1,15 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { FileUtil } from 'src/shared/utils/file.util';
 import { Sema } from 'async-sema';
-import { CloudinaryService } from 'src/modules/integrations/cloudinary/cloudinary.service';
+import { CloudinaryService } from 'src/modules/common/file/services/cloudinary.service';
+import { FileOption, IFileService } from '../interfaces';
+import { UploadApiResponse } from 'cloudinary';
 
 @Injectable()
-export class FileService {
+export class FileService implements IFileService {
   constructor(private readonly cloudinaryService: CloudinaryService) {}
 
-  async uploadFile(files: Express.Multer.File[], folder: string = 'default') {
+  async uploadFile(files: Express.Multer.File[], options: FileOption): Promise<UploadApiResponse[]> {
     try {
       const allowedUpload = FileUtil.getIns().allowFileTypes(files);
       if (!allowedUpload) {
@@ -18,7 +20,7 @@ export class FileService {
       const uploadPromises = files.map(async file => {
         await semaphore.acquire();
         try {
-          const result = await this.cloudinaryService.uploadFile(file, folder);
+          const result = await this.cloudinaryService.uploadFile(file, options);
           return result;
         } finally {
           semaphore.release();
@@ -30,5 +32,8 @@ export class FileService {
     } catch (error) {
       throw error;
     }
+  }
+  deleteFile(files: string[]): Promise<void> {
+    throw new Error('Method not implemented.');
   }
 }
