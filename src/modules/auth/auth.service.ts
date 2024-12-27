@@ -8,10 +8,8 @@ import { transformDtoToPlainObject } from 'src/shared/helpers/transform';
 import { HashingService, PrismaService } from 'src/shared/providers';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { RegisterDto } from './dto/register.dto';
-import { UserService } from 'src/repositories/user.service';
-import { UserDto } from 'src/repositories/dtos/user/user.dto';
-import { UpdateUserDto } from 'src/repositories/dtos/user/update-user.dto';
-import { CreateUserDto } from 'src/repositories/dtos/user/create-user.dto';
+import { CreateUserDto, UpdateUserDto, UserDto } from '../common/user/dtos';
+import { UserService } from '../common/user/services/user.service';
 
 @Injectable()
 export class AuthService {
@@ -94,7 +92,8 @@ export class AuthService {
   }
 
   async changeAvatar(userId: number, files: Express.Multer.File[]) {
-    return await this.userService.updateAvatar(userId, files);
+    return null;
+    // return await this.userService.updateAvatar(userId, files);
   }
 
   async updateProfile(userId: number, updateDto: UpdateUserDto) {

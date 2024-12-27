@@ -6,17 +6,17 @@ import { AuthService } from './auth.service';
 import { JwtConfigService } from './providers';
 import { JwtStrategy, RefreshTokenJwtStrategy } from './strategies';
 import { LocalStrategy } from './strategies/local.strategy';
-import { UserService } from 'src/repositories/user.service';
-import { RoleService } from 'src/repositories/role.service';
+import { UserModule } from '../common/user/user.module';
 
 @Module({
   imports: [
+    UserModule,
     PassportModule,
     JwtModule.registerAsync({
       useClass: JwtConfigService,
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy, RefreshTokenJwtStrategy, UserService, RoleService],
+  providers: [AuthService, LocalStrategy, JwtStrategy, RefreshTokenJwtStrategy],
 })
 export class AuthModule {}

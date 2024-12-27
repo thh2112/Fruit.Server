@@ -4,7 +4,7 @@ import { CoreModule } from './_core/core.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { PublicModule } from './modules/public/public.module';
-import { CaslModule } from './modules/casl/casl.module';
+import { CaslModule } from './modules/common/casl/casl.module';
 
 @Module({
   imports: [CoreModule, AuthModule, CaslModule, AdminModule, PublicModule],

@@ -3,11 +3,14 @@ import { APP_GUARD } from '@nestjs/core';
 import { ENDPOINT_PATH } from 'src/constants/consts';
 import { BearerTokenMiddleware } from 'src/middlewares/bearer-token.middleware';
 import { JwtAuthGuard } from '../auth/guards';
-import { NewsAdminModule } from './news/news.admin.module';
-import { RoleAdminModule } from './role/role.admin.module';
+import { NewsAdminController } from './controllers/news.admin.controller';
+import { RoleAdminController } from './controllers/role.admin.controller';
+import { NewsModule } from '../common/news/news.module';
+import { RoleModule } from '../common/role/role.module';
 
 @Module({
-  imports: [RoleAdminModule, NewsAdminModule],
+  imports: [NewsModule, RoleModule],
+  controllers: [NewsAdminController, RoleAdminController],
   providers: [
     {
       provide: APP_GUARD,
