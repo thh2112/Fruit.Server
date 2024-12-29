@@ -1,9 +1,9 @@
 import { Ability, InferSubjects } from '@casl/ability';
 import { CaslAction, CaslSubjectAll } from 'src/constants/enums';
 import { ExecutionContext } from '@nestjs/common';
-import { UserDto } from 'src/modules/common//user/dtos';
-import { RoleDto } from 'src/modules/common//role/dtos';
-import { NewsDto } from 'src/modules/common//news/dtos';
+import { UserDto } from 'src/modules/features//user/dtos';
+import { RoleDto } from 'src/modules/features//role/dtos';
+import { NewsDto } from 'src/modules/features//news/dtos';
 
 type InferModelSubjects = typeof UserDto | typeof RoleDto | typeof NewsDto;
 

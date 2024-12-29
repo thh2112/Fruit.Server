@@ -1,4 +1,4 @@
-import { UserDto } from 'src/modules/common/user/dtos';
+import { UserDto } from 'src/modules/features/user/dtos';
 
 export interface RoleStrategy {
   defineAbilities(can: any, cannot: any, user: UserDto): void;

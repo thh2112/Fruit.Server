@@ -1,7 +1,7 @@
 import { Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
 import { Express } from 'express';
-import { FileOption } from 'src/modules/common/file/interfaces';
+import { FileOption } from 'src/modules/features/file/interfaces';
 
 @Injectable()
 export class CloudinaryService {

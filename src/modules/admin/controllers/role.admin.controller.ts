@@ -2,10 +2,10 @@ import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import { IResponseSuccess, IResponseSuccessPagination } from 'src/_core/interfaces';
 import { ENDPOINT_PATH } from 'src/constants/consts';
 import { CaslAction } from 'src/constants/enums';
-import { CheckPolicies } from 'src/modules/common//casl/decorators';
-import { PoliciesGuard } from 'src/modules/common//casl/guards';
-import { CreateRoleDto, QueryParamRoleDto, RoleDto } from 'src/modules/common//role/dtos';
-import { RoleService } from 'src/modules/common//role/services/role.service';
+import { CheckPolicies } from 'src/modules/features//casl/decorators';
+import { PoliciesGuard } from 'src/modules/features//casl/guards';
+import { CreateRoleDto, QueryParamRoleDto, RoleDto } from 'src/modules/features//role/dtos';
+import { RoleService } from 'src/modules/features//role/services/role.service';
 
 @Controller(ENDPOINT_PATH.ADMIN.ROLE)
 export class RoleAdminController {

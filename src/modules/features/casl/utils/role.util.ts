@@ -1,5 +1,5 @@
 import { Role } from 'src/constants/enums';
-import { RoleDto } from 'src/modules/common/role/dtos';
+import { RoleDto } from 'src/modules/features/role/dtos';
 
 export class RoleUtil {
   private static roleUtilIns: RoleUtil;

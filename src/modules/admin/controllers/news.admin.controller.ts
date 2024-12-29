@@ -2,11 +2,11 @@ import { Body, Controller, Param, ParseIntPipe, Post, Put, UseGuards } from '@ne
 import { IResponseSuccess } from 'src/_core/interfaces';
 import { ENDPOINT_PATH } from 'src/constants/consts';
 import { CaslAction } from 'src/constants/enums';
-import { CheckPolicies } from 'src/modules/common//casl/decorators';
-import { PoliciesGuard } from 'src/modules/common//casl/guards';
-import { AppAbility } from 'src/modules/common//casl/types';
-import { CreateNewsDto, NewsDto, UpdateNewsDto } from 'src/modules/common//news/dtos';
-import { NewsService } from 'src/modules/common//news/services/news.service';
+import { CheckPolicies } from 'src/modules/features//casl/decorators';
+import { PoliciesGuard } from 'src/modules/features//casl/guards';
+import { AppAbility } from 'src/modules/features//casl/types';
+import { CreateNewsDto, NewsDto, UpdateNewsDto } from 'src/modules/features//news/dtos';
+import { NewsService } from 'src/modules/features//news/services/news.service';
 
 @Controller(ENDPOINT_PATH.ADMIN.NEWS)
 export class NewsAdminController {

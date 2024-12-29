@@ -2,7 +2,7 @@ import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { RoleEnum } from '@prisma/client';
 import { BaseService } from 'src/_core/interfaces';
 import { SYSTEM_ERROR_CODE } from 'src/constants/consts';
-import { RoleService } from 'src/modules/common//role/services/role.service';
+import { RoleService } from 'src/modules/features//role/services/role.service';
 import { transformDtoToPlainObject } from 'src/shared/helpers/transform';
 import { HashingService, PrismaService } from 'src/shared/providers';
 import { FileOption } from '../../file/interfaces';

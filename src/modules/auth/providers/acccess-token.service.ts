@@ -1,4 +1,4 @@
-import { UserDto } from 'src/modules/common/user/dtos';
+import { UserDto } from 'src/modules/features/user/dtos';
 import { IToken } from '../interfaces';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import { Inject, Injectable } from '@nestjs/common';

@@ -5,8 +5,8 @@ import { BearerTokenMiddleware } from 'src/middlewares/bearer-token.middleware';
 import { JwtAuthGuard } from '../auth/guards';
 import { NewsAdminController } from './controllers/news.admin.controller';
 import { RoleAdminController } from './controllers/role.admin.controller';
-import { NewsModule } from '../common/news/news.module';
-import { RoleModule } from '../common/role/role.module';
+import { NewsModule } from '../features/news/news.module';
+import { RoleModule } from '../features/role/role.module';
 
 @Module({
   imports: [NewsModule, RoleModule],

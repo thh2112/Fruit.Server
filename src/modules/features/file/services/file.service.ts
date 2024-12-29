@@ -1,7 +1,7 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { FileUtil } from 'src/shared/utils/file.util';
 import { Sema } from 'async-sema';
-import { CloudinaryService } from 'src/modules/common/file/services/cloudinary.service';
+import { CloudinaryService } from 'src/modules/features/file/services/cloudinary.service';
 import { FileOption, IFileService } from '../interfaces';
 import { UploadApiResponse } from 'cloudinary';
 

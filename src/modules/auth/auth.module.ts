@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 import { JwtConfigService, TokenService } from './providers';
 import { JwtStrategy, RefreshTokenJwtStrategy } from './strategies';
 import { LocalStrategy } from './strategies/local.strategy';
-import { UserModule } from '../common/user/user.module';
+import { UserModule } from '../features/user/user.module';
 import { AccessTokenService } from './providers/acccess-token.service';
 import { RefreshTokenService } from './providers/refresh-token.service';
 

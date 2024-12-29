@@ -1,5 +1,5 @@
 import { Exclude, Expose, Transform, Type } from 'class-transformer';
-import { UserDto } from 'src/modules/common/user/dtos';
+import { UserDto } from 'src/modules/features/user/dtos';
 
 export class NewsDto {
   @Expose()

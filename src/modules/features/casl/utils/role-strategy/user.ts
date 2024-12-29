@@ -1,8 +1,8 @@
 import { CaslAction } from 'src/constants/enums';
 import { RoleStrategy } from '../../interfaces';
-import { UserDto } from 'src/modules/common/user/dtos';
-import { NewsDto } from 'src/modules/common/news/dtos';
-import { RoleDto } from 'src/modules/common/role/dtos';
+import { UserDto } from 'src/modules/features/user/dtos';
+import { NewsDto } from 'src/modules/features/news/dtos';
+import { RoleDto } from 'src/modules/features/role/dtos';
 
 export class UserRoleStrategy implements RoleStrategy {
   defineAbilities(can: any, cannot: any, user: UserDto): void {

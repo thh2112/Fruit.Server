@@ -10,7 +10,7 @@ import _map from 'lodash/map';
 import { Prisma } from '@prisma/client';
 import { NewStatus } from 'src/constants/enums';
 import { CreateNewsDto, NewsDto, QueryParamNewsDto, UpdateNewsDto } from '../dtos';
-import { UserService } from 'src/modules/common/user/services/user.service';
+import { UserService } from 'src/modules/features/user/services/user.service';
 
 @Injectable()
 export class NewsService implements BaseService<NewsDto> {

@@ -1,4 +1,4 @@
-import { RoleDto } from 'src/modules/common//role/dtos';
+import { RoleDto } from 'src/modules/features//role/dtos';
 
 export type IAuthPayload = {
   id: number;
