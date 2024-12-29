@@ -2,14 +2,12 @@ import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { RoleEnum } from '@prisma/client';
 import { BaseService } from 'src/_core/interfaces';
 import { SYSTEM_ERROR_CODE } from 'src/constants/consts';
+import { RoleService } from 'src/modules/common//role/services/role.service';
 import { transformDtoToPlainObject } from 'src/shared/helpers/transform';
 import { HashingService, PrismaService } from 'src/shared/providers';
-import { CreateUserDto, UpdateUserDto, UserDto } from '../dtos';
-import { RoleService } from 'src/modules/common//role/services/role.service';
-import { FileService } from '../../file/services/file.service';
-import { FileOptions } from 'buffer';
 import { FileOption } from '../../file/interfaces';
-import { FileType } from 'src/constants/enums';
+import { FileService } from '../../file/services/file.service';
+import { CreateUserDto, UpdateUserDto, UserDto } from '../dtos';
 
 @Injectable()
 export class UserService implements BaseService<UserDto> {
@@ -142,6 +140,15 @@ export class UserService implements BaseService<UserDto> {
       });
 
       return transformDtoToPlainObject(UserDto, updatedUser);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async isExist(id: number): Promise<boolean> {
+    try {
+      const user = await this.prismaService.user.findUnique({ where: { id } });
+      return !!user;
     } catch (error) {
       throw error;
     }

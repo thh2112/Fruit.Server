@@ -8,6 +8,7 @@ import { AppModule } from './app.module';
 import { Environment, prefixApi } from './constants/consts';
 import { AppConfig, ConfigKeyEnum } from './constants/enums/config.enum';
 import { AllExceptionFilter, TransformResponseInterceptor, ValidationException } from './interceptors';
+import { AuthInterceptor } from './_core/interceptors';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -24,6 +25,8 @@ async function bootstrap() {
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: '*',
   });
+
+  app.useGlobalInterceptors(new AuthInterceptor());
   app.useGlobalInterceptors(new TransformResponseInterceptor());
   app.useGlobalInterceptors(
     new ClassSerializerInterceptor(app.get(Reflector), {

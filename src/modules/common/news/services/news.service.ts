@@ -43,8 +43,8 @@ export class NewsService implements BaseService<NewsDto> {
     try {
       const { caption, content, thumbnail, position, status, userId } = dto;
 
-      const foundUser = await this.userService.findOneById(userId);
-      if (!foundUser) {
+      const isExist = await this.userService.isExist(userId);
+      if (!isExist) {
         throw new UnprocessableEntityException();
       }
 
@@ -127,7 +127,7 @@ export class NewsService implements BaseService<NewsDto> {
   async updateById(id: number, dto: UpdateNewsDto): Promise<NewsDto> {
     try {
       const { userId, ...restDto } = dto;
-      const [foundNews, foundUser] = await Promise.all([this.findOneById(id), this.userService.findOneById(dto.userId)]);
+      const [foundNews, foundUser] = await Promise.all([this.isExist(id), this.userService.isExist(dto.userId)]);
 
       if (!foundNews) {
         throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.NEWS.NEWS_ERR_001);
@@ -172,6 +172,15 @@ export class NewsService implements BaseService<NewsDto> {
       });
 
       return null;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async isExist(id: number): Promise<boolean> {
+    try {
+      const news = await this.prismaService.new.findUnique({ where: { id } });
+      return !!news;
     } catch (error) {
       throw error;
     }

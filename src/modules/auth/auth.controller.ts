@@ -22,7 +22,7 @@ import { IAuthPayload, IResponseSuccess } from 'src/_core/interfaces';
 import { ENDPOINT_PATH } from 'src/constants/consts';
 import { ALLOW_FILE_REGEX, CaslAction } from 'src/constants/enums';
 import { AuthService } from './auth.service';
-import { CurrentUser } from './decorators';
+import { AuthenticatedPayload, CurrentUser } from './decorators';
 import { RegisterDto } from './dto/register.dto';
 import { JwtAuthGuard, JwtRefreshAuthGuard } from './guards';
 import { LocalAuthGuard } from './guards/local-auth.guard';
@@ -41,15 +41,14 @@ export class AuthController {
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post(ENDPOINT_PATH.AUTH.LOGIN)
-  async login(@Request() req: ExpressRequest) {
-    const result = await this.authService.login(req.user as UserDto);
+  async login(@CurrentUser() user: UserDto) {
+    const result = await this.authService.login(user);
     return {
       data: result,
       success: true,
     };
   }
 
-  @Public()
   @Post(ENDPOINT_PATH.AUTH.REGISTER)
   async register(@Body() registerDto: RegisterDto): Promise<IResponseSuccess<UserDto>> {
     const result: UserDto = await this.authService.register(registerDto);
@@ -73,7 +72,7 @@ export class AuthController {
     return ability.can(CaslAction.Read, subject);
   })
   @Get(ENDPOINT_PATH.AUTH.PROFILE)
-  async profile(@CurrentUser() payload: IAuthPayload) {
+  async profile(@AuthenticatedPayload() payload: IAuthPayload) {
     const result = await this.authService.profile(payload.id);
     const response: IResponseSuccess<UserDto> = {
       data: result,
@@ -119,7 +118,7 @@ export class AuthController {
 
   @Post(ENDPOINT_PATH.AUTH.CHANGE_PASSWORD)
   @UseInterceptors(DecryptChangePasswordPayload)
-  async changePassword(@CurrentUser() payload: IAuthPayload, @Body() dto: ChangePasswordDto) {
+  async changePassword(@AuthenticatedPayload() payload: IAuthPayload, @Body() dto: ChangePasswordDto) {
     const result = await this.authService.changePassword(payload, dto);
     const response: IResponseSuccess<null> = {
       data: result,

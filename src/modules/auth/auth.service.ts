@@ -1,15 +1,13 @@
-import { Inject, Injectable, NotFoundException, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
+import { Injectable, NotFoundException, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
 import { IAuthPayload } from 'src/_core/interfaces';
-import { appConfig } from 'src/configs/configuration';
 import { FUNCTION_ERROR_CODE, SYSTEM_ERROR_CODE } from 'src/constants/consts';
 import { transformDtoToPlainObject } from 'src/shared/helpers/transform';
 import { HashingService, PrismaService } from 'src/shared/providers';
-import { ChangePasswordDto } from './dto/change-password.dto';
-import { RegisterDto } from './dto/register.dto';
 import { CreateUserDto, UpdateUserDto, UserDto } from '../common/user/dtos';
 import { UserService } from '../common/user/services/user.service';
+import { ChangePasswordDto } from './dto/change-password.dto';
+import { RegisterDto } from './dto/register.dto';
+import { TokenService } from './providers';
 
 @Injectable()
 export class AuthService {
@@ -17,8 +15,7 @@ export class AuthService {
     private readonly userService: UserService,
     private readonly prismaService: PrismaService,
     private readonly hashingService: HashingService,
-    private readonly jwtService: JwtService,
-    @Inject(appConfig.KEY) private readonly appConf: ConfigType<typeof appConfig>,
+    private readonly tokenService: TokenService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<UserDto | null> {
@@ -57,30 +54,13 @@ export class AuthService {
 
   async login(user: UserDto) {
     try {
-      const { id, email, role, fullName, avatar } = user;
-      const payload = {
-        id,
-        email,
-        fullName,
-        role,
-        avatar,
-      };
-
-      const accessTokenOptions = {
-        issuer: this.appConf.authIssuer,
-        audience: this.appConf.authAudience,
-        expiresIn: this.appConf.authTokenLife,
-      };
-
-      const refreshTokenOptions = {
-        ...accessTokenOptions,
-        expiresIn: this.appConf.authRefreshTokenLife,
-      };
+      const accessTokenIns = this.tokenService.accessTokenService.setPayload(user).setOption();
+      const refreshTokenIns = this.tokenService.refreshTokenService.setPayload(user).setOption();
 
       return {
-        payload,
-        accessToken: await this.generateToken(payload, accessTokenOptions),
-        refreshToken: await this.generateToken(payload, refreshTokenOptions),
+        payload: user,
+        accessToken: accessTokenIns.create(),
+        refreshToken: refreshTokenIns.create(),
       };
     } catch (error) {
       throw error;
@@ -101,19 +81,8 @@ export class AuthService {
 
   async refreshToken(user: UserDto): Promise<{ accessToken: string }> {
     try {
-      const { id, email, role, fullName, avatar } = user;
-      const payload = {
-        id,
-        email,
-        fullName,
-        role,
-        avatar,
-      };
-      const token = await this.generateToken(payload, {
-        issuer: this.appConf.authIssuer,
-        audience: this.appConf.authAudience,
-        expiresIn: this.appConf.authTokenLife,
-      });
+      const accessToken = this.tokenService.accessTokenService.setPayload(user).setOption();
+      const token = accessToken.create();
       return { accessToken: token };
     } catch (error) {
       throw error;
@@ -149,11 +118,5 @@ export class AuthService {
     } catch (error) {
       throw error;
     }
-  }
-
-  private async generateToken(payload: any, options: any): Promise<string> {
-    return await this.jwtService.signAsync(payload, {
-      ...options,
-    });
   }
 }

@@ -7,6 +7,7 @@ export default registerAs(ConfigKeyEnum.App, () => ({
   nodeEnv: process.env.NODE_ENV || 'development',
   appName: process.env.APP_NAME || 'Fruit',
   authSecret: process.env.AUTH_SECRET,
+  authRefreshTokenSecret: process.env.AUTH_REFRESH_TOKEN_SECRET,
   authTokenLife: process.env.AUTH_TOKEN_LIFE,
   authIssuer: process.env.AUTH_ISSUER,
   authAudience: process.env.AUTH_AUDIENCE,

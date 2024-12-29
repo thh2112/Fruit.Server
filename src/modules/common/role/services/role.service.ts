@@ -92,4 +92,13 @@ export class RoleService implements BaseService<RoleDto> {
       throw error;
     }
   }
+
+  async isExist(id: number): Promise<boolean> {
+    try {
+      const role = await this.prismaService.role.findUnique({ where: { id } });
+      return !!role;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
