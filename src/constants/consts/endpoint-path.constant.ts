@@ -19,6 +19,7 @@ export const ENDPOINT_PATH = {
     BASE: '/admin',
     ROLE: '/admin/role',
     NEWS: '/admin/news',
+    CATEGORY: '/admin/category',
   },
   FILE: {
     BASE: '/file',
@@ -26,5 +27,6 @@ export const ENDPOINT_PATH = {
   },
   PUBLIC: {
     NEWS: '/news',
+    CATEGORY: '/category',
   },
 };

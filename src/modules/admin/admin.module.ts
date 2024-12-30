@@ -7,10 +7,12 @@ import { NewsAdminController } from './controllers/news.admin.controller';
 import { RoleAdminController } from './controllers/role.admin.controller';
 import { NewsModule } from '../features/news/news.module';
 import { RoleModule } from '../features/role/role.module';
+import { CategoryAdminController } from './controllers/category.admin.controller';
+import { CategoryModule } from '../features/product-management/category/category.module';
 
 @Module({
-  imports: [NewsModule, RoleModule],
-  controllers: [NewsAdminController, RoleAdminController],
+  imports: [NewsModule, RoleModule, CategoryModule],
+  controllers: [NewsAdminController, RoleAdminController, CategoryAdminController],
   providers: [
     {
       provide: APP_GUARD,

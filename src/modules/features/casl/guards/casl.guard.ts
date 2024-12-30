@@ -3,6 +3,7 @@ import { Reflector } from '@nestjs/core';
 import { CaslAbilityFactory } from '../providers/casl-ability.factory';
 import { AppAbility, PolicyHandler } from '../types';
 import { CHECK_POLICIES_KEY } from '../decorators';
+import { CustomForbiddenException } from 'src/interceptors/exceptions/forbidden.exception';
 
 @Injectable()
 export class PoliciesGuard implements CanActivate {
@@ -16,9 +17,15 @@ export class PoliciesGuard implements CanActivate {
     const { user } = context.switchToHttp().getRequest();
     const ability = this.caslAbilityFactory.createForUser(user);
 
-    return policyHandlers.every(handler => {
+    const isAllowed = policyHandlers.every(handler => {
       return this.execPolicyHandler(handler, ability, context);
     });
+
+    if (!isAllowed) {
+      throw new CustomForbiddenException();
+    }
+
+    return isAllowed;
   }
 
   private execPolicyHandler(handler: PolicyHandler, ability: AppAbility, context: ExecutionContext) {

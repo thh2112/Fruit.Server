@@ -20,21 +20,20 @@ enum RoleEnum {
 }
 
 model User {
-  id              Int       @default(autoincrement())
-  firstName       String    @map("first_name") @db.VarChar(50)
-  lastName        String    @map("last_name") @db.VarChar(50)
-  email           String    @unique
-  password        String
-  phoneNumber     String    @map("phone_number")
-  confirmPassword String    @map("confirm_password")
-  avatar          String?
-  gender          Int       @default(0)
-  isDeleted       Boolean   @default(false) @map("is_deleted")
-  createdAt       DateTime  @default(now()) @map("created_at")
-  updatedAt       DateTime  @updatedAt @map("updated_at")
-  deletedAt       DateTime? @map("deleted_at")
-  role            Role      @relation(fields: [roleId], references: [id])
-  roleId          Int       @default(0) @map("role_id")
+  id          Int       @default(autoincrement())
+  firstName   String    @map("first_name") @db.VarChar(50)
+  lastName    String    @map("last_name") @db.VarChar(50)
+  email       String    @unique
+  password    String
+  phoneNumber String    @map("phone_number")
+  avatar      String?
+  gender      Int       @default(0)
+  isDeleted   Boolean   @default(false) @map("is_deleted")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+  role        Role      @relation(fields: [roleId], references: [id])
+  roleId      Int       @default(0) @map("role_id")
 
   new New[]
 
@@ -66,4 +65,36 @@ model New {
   authorId  Int       @map("author_id")
 
   @@map("new")
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique @db.VarChar(255)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  parentId Int?       @map("parent_id")
+  parent   Category?  @relation("ParentChild", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children Category[] @relation("ParentChild")
+
+  products Product[]
+
+  @@map("category")
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique @db.VarChar(255)
+  description String   @db.Text
+  quantity    Int
+  origin      String
+  status      Int
+  avatar      String
+  thumbnail   Json     @db.Json()
+  isDeleted   Boolean  @default(false) @map("is_deleted")
+  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  Int
+
+  @@map("product")
 }

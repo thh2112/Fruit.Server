@@ -4,11 +4,12 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import helmet from 'helmet';
 
+import { AuthInterceptor } from './_core/interceptors';
 import { AppModule } from './app.module';
 import { Environment, prefixApi } from './constants/consts';
 import { AppConfig, ConfigKeyEnum } from './constants/enums/config.enum';
-import { AllExceptionFilter, TransformResponseInterceptor, ValidationException } from './interceptors';
-import { AuthInterceptor } from './_core/interceptors';
+import { AllExceptionFilter, TransformResponseInterceptor } from './interceptors';
+import { ValidationException } from './interceptors/exceptions/validation.exception';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -33,6 +34,7 @@ async function bootstrap() {
       excludeExtraneousValues: true,
     }),
   );
+
   app.useGlobalPipes(
     new ValidationPipe({
       exceptionFactory(errors) {

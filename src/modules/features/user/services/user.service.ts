@@ -1,4 +1,4 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, UnprocessableEntityException } from '@nestjs/common';
 import { RoleEnum } from '@prisma/client';
 import { BaseService } from 'src/_core/interfaces';
 import { SYSTEM_ERROR_CODE } from 'src/constants/consts';
@@ -20,6 +20,10 @@ export class UserService implements BaseService<UserDto> {
   async create(dto: CreateUserDto): Promise<UserDto | null> {
     try {
       const { email, password, confirmPassword, firstName, lastName, roleId, gender, ...restDto } = dto;
+      if (password !== confirmPassword) {
+        throw new BadRequestException(SYSTEM_ERROR_CODE.CODE[400]);
+      }
+
       const foundUser = await this.findOneByEmail(email);
       if (foundUser) {
         throw new UnprocessableEntityException(SYSTEM_ERROR_CODE.USER.USER_ERR_001);
@@ -31,14 +35,12 @@ export class UserService implements BaseService<UserDto> {
       }
 
       const hashPassword = await this.hashingService.hash(password);
-      const hashConfirmPassword = await this.hashingService.hash(confirmPassword);
       const user = await this.prismaService.user.create({
         data: {
           email,
           firstName,
           lastName,
           password: hashPassword,
-          confirmPassword: hashConfirmPassword,
           gender,
           ...restDto,
           role: {
@@ -51,7 +53,7 @@ export class UserService implements BaseService<UserDto> {
 
       return transformDtoToPlainObject(UserDto, user);
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
 
@@ -70,7 +72,7 @@ export class UserService implements BaseService<UserDto> {
 
       return transformDtoToPlainObject(UserDto, user);
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
 
@@ -91,7 +93,7 @@ export class UserService implements BaseService<UserDto> {
 
       return transformDtoToPlainObject(UserDto, user);
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
 
@@ -122,7 +124,7 @@ export class UserService implements BaseService<UserDto> {
       });
       return transformDtoToPlainObject(UserDto, updatedUser);
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
   async updateById(id: number, dto: UpdateUserDto): Promise<UserDto> {
@@ -141,7 +143,7 @@ export class UserService implements BaseService<UserDto> {
 
       return transformDtoToPlainObject(UserDto, updatedUser);
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
 
@@ -150,7 +152,7 @@ export class UserService implements BaseService<UserDto> {
       const user = await this.prismaService.user.findUnique({ where: { id } });
       return !!user;
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
 }

@@ -30,7 +30,7 @@ export class FileService implements IFileService {
       const result = await Promise.all(uploadPromises);
       return result;
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
   deleteFile(files: string[]): Promise<void> {

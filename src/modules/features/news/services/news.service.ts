@@ -1,4 +1,4 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, UnprocessableEntityException } from '@nestjs/common';
 import { BaseService, PaginatedResult } from 'src/_core/interfaces';
 import { transformDtoToPlainObject } from 'src/shared/helpers/transform';
 import { PrismaService } from 'src/shared/providers';
@@ -68,7 +68,7 @@ export class NewsService implements BaseService<NewsDto> {
 
       return transformDtoToPlainObject(NewsDto, newObj);
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
   async findMany(queryParams: QueryParamNewsDto): Promise<PaginatedResult<NewsDto[]>> {
@@ -102,7 +102,7 @@ export class NewsService implements BaseService<NewsDto> {
       };
       return pagingWithResult;
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
 
@@ -121,7 +121,7 @@ export class NewsService implements BaseService<NewsDto> {
 
       return transformDtoToPlainObject(NewsDto, foundNew);
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
   async updateById(id: number, dto: UpdateNewsDto): Promise<NewsDto> {
@@ -152,7 +152,7 @@ export class NewsService implements BaseService<NewsDto> {
 
       return transformDtoToPlainObject(NewsDto, updatedNews);
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
 
@@ -173,7 +173,7 @@ export class NewsService implements BaseService<NewsDto> {
 
       return null;
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
 
@@ -182,7 +182,7 @@ export class NewsService implements BaseService<NewsDto> {
       const news = await this.prismaService.new.findUnique({ where: { id } });
       return !!news;
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
 }

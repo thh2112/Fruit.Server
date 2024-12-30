@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
 import { IAuthPayload } from 'src/_core/interfaces';
 import { FUNCTION_ERROR_CODE, SYSTEM_ERROR_CODE } from 'src/constants/consts';
 import { transformDtoToPlainObject } from 'src/shared/helpers/transform';
@@ -39,7 +39,7 @@ export class AuthService {
 
       return transformDtoToPlainObject(UserDto, user);
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
 
@@ -48,7 +48,7 @@ export class AuthService {
       const user = await this.userService.create(dto as CreateUserDto);
       return user;
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
 
@@ -63,7 +63,7 @@ export class AuthService {
         refreshToken: refreshTokenIns.create(),
       };
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
 
@@ -85,7 +85,7 @@ export class AuthService {
       const token = accessToken.create();
       return { accessToken: token };
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
 
@@ -116,7 +116,7 @@ export class AuthService {
 
       return null;
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
 }

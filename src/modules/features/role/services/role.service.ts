@@ -1,4 +1,4 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, UnprocessableEntityException } from '@nestjs/common';
 import { RoleEnum } from '@prisma/client';
 import _map from 'lodash/map';
 import { BaseService, PaginatedResult } from 'src/_core/interfaces';
@@ -28,7 +28,7 @@ export class RoleService implements BaseService<RoleDto> {
 
       return transformDtoToPlainObject(RoleDto, createdRole);
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
 
@@ -44,7 +44,7 @@ export class RoleService implements BaseService<RoleDto> {
 
       return transformDtoToPlainObject(RoleDto, foundUser);
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
 
@@ -73,7 +73,7 @@ export class RoleService implements BaseService<RoleDto> {
 
       return pagingWithResult;
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
 
@@ -89,7 +89,7 @@ export class RoleService implements BaseService<RoleDto> {
 
       return transformDtoToPlainObject(RoleDto, role);
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
 
@@ -98,7 +98,7 @@ export class RoleService implements BaseService<RoleDto> {
       const role = await this.prismaService.role.findUnique({ where: { id } });
       return !!role;
     } catch (error) {
-      throw error;
+      throw new InternalServerErrorException(error);
     }
   }
 }

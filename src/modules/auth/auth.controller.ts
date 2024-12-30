@@ -49,6 +49,7 @@ export class AuthController {
     };
   }
 
+  @Public()
   @Post(ENDPOINT_PATH.AUTH.REGISTER)
   async register(@Body() registerDto: RegisterDto): Promise<IResponseSuccess<UserDto>> {
     const result: UserDto = await this.authService.register(registerDto);

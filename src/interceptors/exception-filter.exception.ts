@@ -1,54 +1,34 @@
-import { ArgumentsHost, Catch, ExceptionFilter, ForbiddenException, HttpException, HttpStatus } from '@nestjs/common';
+import { ArgumentsHost, Catch, ExceptionFilter, ForbiddenException, HttpException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Prisma } from '@prisma/client';
 import { Response } from 'express';
-import _last from 'lodash/last';
-import { IErrorResponse } from 'src/_core/interfaces';
-import { PRISMA_ERROR_CODE } from 'src/constants/consts';
 
-import { SystemUtil } from 'src/shared/utils/system.util';
-import { ValidationException } from './validation-exception.pipe';
+import { ForbiddenExceptionHandler } from './exceptions/forbidden.exception';
+import { PrismaException, PrismaExceptionHandler } from './exceptions/prisma.exception';
+import { UnknownExceptionHandler } from './exceptions/unknown.exception';
+import { ValidationException, ValidationExceptionHandler } from './exceptions/validation.exception';
+import { ExceptionHandler } from './interfaces';
 
 @Catch(HttpException)
 export class AllExceptionFilter implements ExceptionFilter {
+  private readonly handler: Record<string, ExceptionHandler> = {
+    [ValidationException.name]: new ValidationExceptionHandler(),
+    [ForbiddenException.name]: new ForbiddenExceptionHandler(),
+    [PrismaException.name]: new PrismaExceptionHandler(),
+    [HttpException.name]: new UnknownExceptionHandler(), // Handler mặc định
+  };
+
   constructor(protected readonly configService?: ConfigService) {}
 
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
-    const request = ctx.getRequest<Request>();
-    const status = exception.getStatus();
 
-    const result: IErrorResponse<null> = {
-      errorMessage: '',
-      success: false,
-      data: null,
-      errorMessageCode: '',
-      path: request.url,
-    };
+    const handler = this.handler[exception.constructor.name]?.handle(exception, host, response);
 
-    // Validation Exception
-    if (exception instanceof ValidationException) {
-      return response.status(HttpStatus.BAD_REQUEST).json(exception.getResponse());
+    if (handler) {
+      return;
     }
 
-    if (exception instanceof ForbiddenException) {
-      return response.status(HttpStatus.FORBIDDEN).json(exception.getResponse());
-    }
-
-    //Prisma Exception
-    if (exception instanceof Prisma.PrismaClientKnownRequestError) {
-      if (exception.code === PRISMA_ERROR_CODE.ERROR_2014 || exception.code === PRISMA_ERROR_CODE.ERROR_2003) {
-        result.errorMessage = exception.message;
-      }
-    } else {
-      const errorMessage: string = exception.message;
-      const errorMessageCode = _last(errorMessage?.split('.'));
-      const messageI18n = SystemUtil.getIns().i18nConvertMessageError({ ...result, errorMessage }, status, host);
-      result.errorMessageCode = errorMessageCode;
-      result.errorMessage = messageI18n;
-    }
-
-    return response.status(status).json(result);
+    return new UnknownExceptionHandler().handle(exception, host, response);
   }
 }
